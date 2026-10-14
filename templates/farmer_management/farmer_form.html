@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Smart Farming{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    {% if messages %}
+        <div class="row justify-content-center mb-3">
+            <div class="col-12 col-xl-8 col-xxl-7">
+                {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show shadow-sm farmer-success-message"
+                         role="alert">
+                        <i data-feather="check-circle" class="align-middle me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-8 col-xxl-7">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-4">
+                <div>
+                    <h1 class="h3 mb-1">{{ title }}</h1>
+                    <p class="text-muted mb-0">Enter the farmer's information in the form below.</p>
+                </div>
+                <a href="{% url 'farmer_list' %}" class="btn btn-outline-secondary">
+                    <i data-feather="arrow-left" class="align-middle me-1"></i>
+                    Back to Farmers
+                </a>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-3 bg-success bg-opacity-10 text-success p-2 me-3">
+                            <i data-feather="user-plus" class="align-middle"></i>
+                        </div>
+                        <div>
+                            <h5 class="card-title mb-0">{{ title }}</h5>
+                            <small class="text-muted">Farmer details</small>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="card-body p-4">
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+                            {% for field in form %}
+                                <div class="col-12 {% if field.field.widget.input_type == 'checkbox' %}col-md-12{% else %}col-md-6{% endif %} mb-3">
+                                    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                                        {{ field.label }}
+                                        {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                                    </label>
+
+                                    {{ field }}
+
+                                    {% if field.help_text %}
+                                        <div class="form-text">{{ field.help_text }}</div>
+                                    {% endif %}
+
+                                    {% for error in field.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-white d-flex justify-content-end flex-wrap gap-2 p-3">
+                        <a href="{% url 'farmer_list' %}" class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success px-4">
+                            <i data-feather="save" class="align-middle me-1"></i>
+                            Save Farmer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".farmer-success-message").forEach(function (alertElement) {
+            window.setTimeout(function () {
+                if (window.bootstrap && window.bootstrap.Alert) {
+                    window.bootstrap.Alert.getOrCreateInstance(alertElement).close();
+                } else {
+                    alertElement.remove();
+                }
+            }, 30000);
+        });
+    });
+</script>
+{% endblock %}

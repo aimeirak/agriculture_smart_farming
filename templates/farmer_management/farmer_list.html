@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Farmers | Smart Farming{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="d-flex justify-content-end mb-4">
+        <a href="{% url 'farmer_create' %}" class="btn btn-success shadow-sm">
+            <i data-feather="user-plus" class="align-middle me-1"></i>
+            Register Farmer
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom py-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-3 bg-success bg-opacity-10 text-success p-2 me-3">
+                        <i data-feather="users" class="align-middle"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">Registered Farmers</h5>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <form method="get" class="d-flex" role="search">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i data-feather="search" style="width: 16px; height: 16px;"></i>
+                            </span>
+                            <input
+                                type="search"
+                                name="q"
+                                value="{{ request.GET.q|default:'' }}"
+                                class="form-control border-start-0"
+                                placeholder="Search name, phone, email..."
+                                aria-label="Search farmers"
+                            >
+                            {% if request.GET.q %}
+                                <a href="{% url 'farmer_list' %}" class="btn btn-outline-secondary" title="Clear search">
+                                    <i data-feather="x" style="width: 16px; height: 16px;"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-success ms-2">Search</button>
+                    </form>
+                    <span class="badge rounded-pill bg-success bg-opacity-10 text-success px-3 py-2">
+                        {{ farmers|length }} farmer{{ farmers|length|pluralize }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4 py-3 text-muted small text-uppercase">Farmer</th>
+                            <th class="py-3 text-muted small text-uppercase">Phone</th>
+                            <th class="py-3 text-muted small text-uppercase">Email</th>
+                            <th class="py-3 text-muted small text-uppercase">Status</th>
+                            <th class="pe-4 py-3 text-muted small text-uppercase text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for farmer in farmers %}
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center me-3"
+                                             style="width: 42px; height: 42px; flex-shrink: 0;">
+                                            <i data-feather="user" style="width: 18px; height: 18px;"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-semibold text-dark">{{ farmer.first_name }} {{ farmer.last_name }}</div>
+                                            <small class="text-muted">ID: {{ farmer.pk }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-3">{{ farmer.phone|default:"—" }}</td>
+                                <td class="py-3">{{ farmer.email|default:"—" }}</td>
+                                <td class="py-3">
+                                    {% if farmer.status == "ACTIVE" or farmer.status == "Active" or farmer.status == "active" %}
+                                        <span class="badge rounded-pill bg-success px-3 py-2">Active</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill bg-danger px-3 py-2">{{ farmer.status|default:"Inactive" }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="pe-4 py-3 text-end">
+                                    <div class="d-inline-flex gap-2">
+                                        <a href="{% url 'farmer_detail' farmer.pk %}"
+                                           class="btn btn-sm btn-outline-primary" title="View farmer" aria-label="View farmer">
+                                            <i data-feather="eye" style="width: 15px; height: 15px;"></i>
+                                        </a>
+                                        <a href="{% url 'farmer_update' farmer.pk %}"
+                                           class="btn btn-sm btn-outline-secondary" title="Edit farmer" aria-label="Edit farmer">
+                                            <i data-feather="edit-2" style="width: 15px; height: 15px;"></i>
+                                        </a>
+                                        <a href="{% url 'farmer_delete' farmer.pk %}"
+                                           class="btn btn-sm btn-outline-danger" title="Delete farmer" aria-label="Delete farmer"
+                                           onclick="return confirm('Are you sure you want to delete this farmer?');">
+                                            <i data-feather="trash-2" style="width: 15px; height: 15px;"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center py-5">
+                                    <div class="rounded-circle bg-success bg-opacity-10 text-success d-inline-flex align-items-center justify-content-center mb-3"
+                                         style="width: 64px; height: 64px;">
+                                        <i data-feather="users" style="width: 28px; height: 28px;"></i>
+                                    </div>
+                                    <h5 class="fw-bold mb-1">No farmers yet</h5>
+                                    <p class="text-muted mb-3">Register a farmer to get started.</p>
+                                    <a href="{% url 'farmer_create' %}" class="btn btn-success">
+                                        <i data-feather="user-plus" class="align-middle me-1"></i>
+                                        Register First Farmer
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
