@@ -65,6 +65,37 @@ class Farmer(AuditModel):
         return f"{self.first_name} {self.last_name}"
 
 
+    
+class District(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class Sector(models.Model):
+    district = models.ForeignKey(
+        District,
+        on_delete=models.PROTECT,
+        related_name="sectors",
+    )
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ["name"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["district", "name"],
+                name="unique_sector_per_district",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.name} ({self.district.name})"
+
 class Farm(AuditModel):
     class Status(models.TextChoices):
         ACTIVE = "ACTIVE", "Active"
@@ -75,18 +106,32 @@ class Farm(AuditModel):
         default=uuid.uuid4,
         editable=False,
     )
+
     farmer = models.ForeignKey(
         Farmer,
         on_delete=models.PROTECT,
         related_name="farms",
     )
+
     farm_name = models.CharField(max_length=150)
-    district = models.CharField(max_length=100)
-    sector = models.CharField(max_length=100)
+
+    district = models.ForeignKey(
+        District,
+        on_delete=models.PROTECT,
+        related_name="farms",
+    )
+
+    sector = models.ForeignKey(
+        Sector,
+        on_delete=models.PROTECT,
+        related_name="farms",
+    )
+
     area_hectares = models.DecimalField(
         max_digits=10,
         decimal_places=2,
     )
+
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
@@ -102,9 +147,22 @@ class Farm(AuditModel):
             )
         ]
 
+    def clean(self):
+        from django.core.exceptions import ValidationError
+
+        super().clean()
+
+        if (
+            self.sector_id
+            and self.district_id
+            and self.sector.district_id != self.district_id
+        ):
+            raise ValidationError({
+                "sector": "Please select a sector belonging to the chosen district."
+            })
+
     def __str__(self):
         return self.farm_name
-
 
 class Crop(AuditModel):
     class Category(models.TextChoices):
@@ -298,3 +356,4 @@ class PlantingInput(AuditModel):
             f"{self.agricultural_input} - "
             f"{self.planting} ({self.quantity_used})"
         )
+

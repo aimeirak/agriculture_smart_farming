@@ -12,4 +12,5 @@ urlpatterns = [
     path("farms/<uuid:pk>/", views.farm_detail, name="farm_detail"),
     path("farms/<uuid:pk>/edit/", views.farm_update, name="farm_update"),
     path("farms/<uuid:pk>/delete/", views.farm_delete, name="farm_delete"),
+    path("sectors/", views.get_sectors, name="get_sectors"),
     ]

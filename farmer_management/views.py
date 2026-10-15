@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Farmer,Farm
-from .forms import FarmerForm
+from .models import Farmer,Farm,District,Sector
+from .forms import FarmerForm,FarmForm
 from django.db.models import Q
 
 
@@ -103,22 +103,43 @@ def farmer_delete(request, pk):
         messages.success(request, "Farmer deleted successfully.")
         return redirect("farmer_list")
 
-    return render(
-        request,
-        "farmer_management/farmer_confirm_delete.html",
-        {"farmer": farmer},
-    )
+    return redirect("farmer_list")
 
 
+
+# Farms views
 
 def farm_list(request):
-    farms = Farm.objects.select_related("farmer").all()
+    query = request.GET.get("q", "").strip()
 
-    return render(
-        request,
-        "farmer_management/farm_list.html",
-        {"farms": farms},
+    farms = Farm.objects.select_related(
+        "farmer",
+        "district",
+        "sector",
     )
+
+    if query:
+        farms = farms.filter(
+            Q(farm_name__icontains=query)
+            | Q(farmer__first_name__icontains=query)
+            | Q(farmer__last_name__icontains=query)
+            | Q(district__name__icontains=query)
+            | Q(sector__name__icontains=query)
+        )
+
+    context = {
+        "farms": farms,
+        "query": query,
+        "total_farms": Farm.objects.count(),
+        "active_farms": Farm.objects.filter(
+            status=Farm.Status.ACTIVE
+        ).count(),
+        "inactive_farms": Farm.objects.filter(
+            status=Farm.Status.INACTIVE
+        ).count(),
+    }
+
+    return render(request, "farmer_management/farm_list.html", context)
 
 
 def farm_create(request):
@@ -190,4 +211,19 @@ def farm_delete(request, pk):
         "farmer_management/farm_confirm_delete.html",
         {"farm": farm},
     )
+
+
+def get_sectors(request):
+    district_id = request.GET.get("district_id")
+
+    if not district_id:
+        return JsonResponse({"sectors": []})
+
+    district = get_object_or_404(District, pk=district_id)
+
+    sectors = Sector.objects.filter(
+        district=district
+    ).order_by("name").values("id", "name")
+
+    return JsonResponse({"sectors": list(sectors)})
 

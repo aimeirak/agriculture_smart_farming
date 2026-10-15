@@ -97,11 +97,21 @@
                                            class="btn btn-sm btn-outline-secondary" title="Edit farmer" aria-label="Edit farmer">
                                             <i data-feather="edit-2" style="width: 15px; height: 15px;"></i>
                                         </a>
-                                        <a href="{% url 'farmer_delete' farmer.pk %}"
-                                           class="btn btn-sm btn-outline-danger" title="Delete farmer" aria-label="Delete farmer"
-                                           onclick="return confirm('Are you sure you want to delete this farmer?');">
-                                            <i data-feather="trash-2" style="width: 15px; height: 15px;"></i>
-                                        </a>
+                                        <form method="POST"
+                                            action="{% url 'farmer_delete' farmer.pk %}"
+                                            class="d-inline"
+                                            onsubmit="return confirm('Are you sure you want to delete this farmer?');">
+
+                                            {% csrf_token %}
+
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    title="Delete farmer"
+                                                    aria-label="Delete farmer">
+                                                <i data-feather="trash-2"
+                                                style="width: 15px; height: 15px;"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
