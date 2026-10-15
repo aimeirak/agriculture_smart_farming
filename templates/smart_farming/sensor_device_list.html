@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Sensor Devices{% endblock %}
+{% block page_title %}Sensor Device Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <!-- Summary Cards -->
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted">Total Devices</h6>
+                    <h3>{{ total_devices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted">Active Devices</h6>
+                    <h3 class="text-success">{{ active_devices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted">Inactive Devices</h6>
+                    <h3 class="text-secondary">{{ inactive_devices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted">Under Maintenance</h6>
+                    <h3 class="text-warning">{{ maintenance_devices }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sensor Device Table -->
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h5 class="card-title mb-0">Sensor Devices</h5>
+                    <p class="text-muted small mb-0">
+                        Register and manage sensors installed on farms.
+                    </p>
+                </div>
+
+                <a href="{% url 'sensor_device_create' %}"
+                   class="btn btn-primary">
+                    <i class="align-middle" data-feather="plus"></i>
+                    Add Sensor Device
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Search and Filters -->
+            <form method="get" class="row g-3 mb-4">
+                <div class="col-md-5">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text"
+                           id="search"
+                           name="search"
+                           class="form-control"
+                           placeholder="Search device code or farm..."
+                           value="{{ search }}">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="status" class="form-label">Device Status</label>
+                    <select name="status" id="status" class="form-select">
+                        <option value="">All Statuses</option>
+                        {% for value, label in statuses %}
+                            <option value="{{ value }}"
+                                {% if selected_status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="device_type" class="form-label">Device Type</label>
+                    <select name="device_type"
+                            id="device_type"
+                            class="form-select">
+                        <option value="">All Device Types</option>
+                        {% for value, label in device_types %}
+                            <option value="{{ value }}"
+                                {% if selected_type == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i data-feather="search"></i>
+                    </button>
+                </div>
+
+                <div class="col-12">
+                    <a href="{% url 'sensor_device_list' %}"
+                       class="btn btn-light btn-sm">
+                        Clear Filters
+                    </a>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Device Code</th>
+                            <th>Farm</th>
+                            <th>Device Type</th>
+                            <th>Installation Date</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for device in sensor_devices %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+
+                                <td>
+                                    <strong>{{ device.device_code }}</strong>
+                                </td>
+
+                                <td>{{ device.farm }}</td>
+
+                                <td>{{ device.get_device_type_display }}</td>
+
+                                <td>{{ device.installed_on|date:"d M Y" }}</td>
+
+                                <td>
+                                    {% if device.status == "ACTIVE" %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% elif device.status == "INACTIVE" %}
+                                        <span class="badge bg-secondary">Inactive</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">
+                                            Under Maintenance
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-end">
+                                    <a href="{% url 'sensor_device_detail' device.pk %}"
+                                       class="btn btn-sm btn-light"
+                                       title="View details">
+                                        <i data-feather="eye"></i>
+                                    </a>
+
+                                    <a href="{% url 'sensor_device_update' device.pk %}"
+                                       class="btn btn-sm btn-light"
+                                       title="Edit device">
+                                        <i data-feather="edit-2"></i>
+                                    </a>
+
+                                    <form method="post"
+                                          action="{% url 'sensor_device_delete' device.pk %}"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to delete this sensor device?');">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="btn btn-sm btn-light text-danger"
+                                                title="Delete device">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <i data-feather="cpu"
+                                       style="width: 40px; height: 40px;"
+                                       class="text-muted mb-2"></i>
+
+                                    <h5>No Sensor Devices Found</h5>
+
+                                    <p class="text-muted">
+                                        No devices match your search or filters.
+                                    </p>
+
+                                    <a href="{% url 'sensor_device_create' %}"
+                                       class="btn btn-primary btn-sm">
+                                        Register First Device
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-muted small">
+                Showing {{ sensor_devices|length }} device(s).
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+```

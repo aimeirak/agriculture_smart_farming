@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">{{ page_title }}</h5>
+            <p class="text-muted small mb-0">
+                Enter the sensor measurement details below.
+            </p>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.device.id_for_label }}"
+                               class="form-label">
+                            Sensor Device <span class="text-danger">*</span>
+                        </label>
+
+                        {{ form.device }}
+
+                        {% for error in form.device.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.recorded_at.id_for_label }}"
+                               class="form-label">
+                            Reading Date and Time
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        {{ form.recorded_at }}
+
+                        {% for error in form.recorded_at.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.soil_moisture_pct.id_for_label }}"
+                               class="form-label">
+                            Soil Moisture (%)
+                        </label>
+
+                        {{ form.soil_moisture_pct }}
+
+                        {% for error in form.soil_moisture_pct.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+
+                        <small class="text-muted">
+                            Valid range: 0–100%.
+                        </small>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.temperature_c.id_for_label }}"
+                               class="form-label">
+                            Temperature (°C)
+                        </label>
+
+                        {{ form.temperature_c }}
+
+                        {% for error in form.temperature_c.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.humidity_pct.id_for_label }}"
+                               class="form-label">
+                            Humidity (%)
+                        </label>
+
+                        {{ form.humidity_pct }}
+
+                        {% for error in form.humidity_pct.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+
+                        <small class="text-muted">
+                            Valid range: 0–100%.
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="alert alert-info">
+                    <i data-feather="info" class="me-1"></i>
+                    Enter at least one measurement. Measurements that were
+                    not collected may be left blank.
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'sensor_reading_list' %}"
+                       class="btn btn-light">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="save" class="me-1"></i>
+                        {{ button_text }}
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

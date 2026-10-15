@@ -27,6 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', home, name='home'),
     path("farm-management/", include("farmer_management.urls")),
+    path( "smart-farming/",include("smart_farming.urls"),),
 
     
 ]

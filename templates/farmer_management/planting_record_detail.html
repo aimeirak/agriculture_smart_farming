@@ -1,0 +1,248 @@
+
+{% extends "base.html" %}
+
+{% block title %}Planting Record Details{% endblock %}
+
+{% block page_title %}Planting Record Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="h3 mb-1">Planting Record Details</h1>
+            <p class="text-muted mb-0">
+                View planting information, measurements, and current status.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a href="{% url 'planting_record_list' %}"
+               class="btn btn-light">
+                <i class="align-middle" data-feather="arrow-left"></i>
+                Back
+            </a>
+
+            <a href="{% url 'planting_record_update' planting_record.pk %}"
+               class="btn btn-primary">
+                <i class="align-middle" data-feather="edit-2"></i>
+                Edit Record
+            </a>
+        </div>
+    </div>
+
+    <!-- Planting Overview -->
+    <div class="row">
+        <div class="col-12 col-lg-8">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Planting Information</h5>
+                    <p class="text-muted small mb-0">
+                        Basic information about this planting record.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Farm</label>
+                            <h6 class="mb-0">
+                                {{ planting_record.farm }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Crop</label>
+                            <h6 class="mb-0">
+                                {{ planting_record.crop }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Planting Date</label>
+                            <h6 class="mb-0">
+                                {{ planting_record.planting_date|date:"d M Y" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">
+                                Expected Harvest Date
+                            </label>
+                            <h6 class="mb-0">
+                                {{ planting_record.expected_harvest_date|date:"d M Y" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Growing Season</label>
+                            <h6 class="mb-0">
+                                {{ planting_record.season|default:"Not specified" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Planting Status</label>
+                            <div>
+                                {% if planting_record.status == "PLANNED" %}
+                                    <span class="badge bg-info">Planned</span>
+                                {% elif planting_record.status == "PLANTED" %}
+                                    <span class="badge bg-primary">Planted</span>
+                                {% elif planting_record.status == "GROWING" %}
+                                    <span class="badge bg-success">Growing</span>
+                                {% elif planting_record.status == "HARVESTED" %}
+                                    <span class="badge bg-secondary">Harvested</span>
+                                {% elif planting_record.status == "CANCELLED" %}
+                                    <span class="badge bg-danger">Cancelled</span>
+                                {% else %}
+                                    <span class="badge bg-light text-dark">
+                                        {{ planting_record.get_status_display }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planting Measurements -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Planting Measurements</h5>
+                    <p class="text-muted small mb-0">
+                        Area planted and quantity used.
+                    </p>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">
+                                Area Planted (hectares)
+                            </label>
+                            <h4 class="mb-0">
+                                {{ planting_record.area_planted_hectares|default:"—" }}
+                                <small class="text-muted fs-6">ha</small>
+                            </h4>
+                            <small class="text-muted">
+                                Must not exceed the total area of the selected farm.
+                            </small>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Quantity Planted</label>
+                            <h4 class="mb-0">
+                                {{ planting_record.quantity_planted|default:"—" }}
+                                {% if planting_record.quantity_planted %}
+                                    <small class="text-muted fs-6">
+                                        {{ planting_record.quantity_unit }}
+                                    </small>
+                                {% endif %}
+                            </h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Additional Notes</h5>
+                </div>
+
+                <div class="card-body">
+                    {% if planting_record.notes %}
+                        <p class="mb-0" style="white-space: pre-line;">{{ planting_record.notes }}</p>
+                    {% else %}
+                        <p class="text-muted mb-0">
+                            No additional notes have been provided.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-12 col-lg-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Farm Information</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Farm Name</label>
+                        <h6 class="mb-0">
+                            {{ planting_record.farm }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small">Total Farm Area</label>
+                        <h6 class="mb-0">
+                            {{ planting_record.farm.area_hectares }} ha
+                        </h6>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="text-muted small">Area Planted</label>
+                        <h6 class="mb-0">
+                            {{ planting_record.area_planted_hectares }} ha
+                        </h6>
+                    </div>
+
+                    {% if planting_record.farm.area_hectares %}
+                        <hr>
+                        <label class="text-muted small">Farm Area Utilization</label>
+
+                        <div class="progress mt-2" style="height: 8px;">
+                            <div
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width: {% widthratio planting_record.area_planted_hectares planting_record.farm.area_hectares 100 %}%;"
+                                aria-valuenow="{% widthratio planting_record.area_planted_hectares planting_record.farm.area_hectares 100 %}"
+                                aria-valuemin="0"
+                                aria-valuemax="100">
+                            </div>
+                        </div>
+
+                        <small class="text-muted">
+                            {% widthratio planting_record.area_planted_hectares planting_record.farm.area_hectares 100 %}%
+                            of total farm area
+                        </small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Record Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Record Actions</h5>
+                </div>
+
+                <div class="card-body">
+                    <a href="{% url 'planting_record_update' planting_record.pk %}"
+                       class="btn btn-primary w-100 mb-2">
+                        Edit Planting Record
+                    </a>
+
+                    <a href="{% url 'planting_record_list' %}"
+                       class="btn btn-light w-100">
+                        Return to Planting Records
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

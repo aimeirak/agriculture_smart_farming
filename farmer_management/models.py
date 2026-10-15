@@ -223,6 +223,30 @@ class PlantingRecord(AuditModel):
         max_digits=10,
         decimal_places=2,
     )
+    planted_area = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        help_text="Planted area in hectares.",
+    )
+    
+    quantity_planted = models.DecimalField(
+            max_digits=12,
+            decimal_places=2,
+            null=True,
+            blank=True,
+        )
+    
+    quantity_unit = models.CharField(
+            max_length=30,
+            default="kg",
+        )
+    
+    notes = models.TextField(
+            blank=True,
+            null=True,
+        )
     status = models.CharField(
         max_length=20,
         choices=Status.choices,
@@ -356,4 +380,7 @@ class PlantingInput(AuditModel):
             f"{self.agricultural_input} - "
             f"{self.planting} ({self.quantity_used})"
         )
+
+    
+    
 
