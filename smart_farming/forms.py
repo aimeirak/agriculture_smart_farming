@@ -306,7 +306,7 @@ class IrrigationRecordForm(forms.ModelForm):
             }),
             "method": forms.TextInput(attrs={
                 "class": "form-control",
-                "placeholder": "e.g. Drip, Sprinkler, Surface",
+                "placeholder": "e.g. Drip irrigation, Sprinkler",
                 "maxlength": "100",
             }),
             "status": forms.Select(attrs={
@@ -318,7 +318,7 @@ class IrrigationRecordForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["farm"].queryset = Farm.objects.order_by("farm_name")
-        self.fields["farm"].empty_label = "Select a farm"
+        self.fields["farm"].empty_label = "Select farm"
 
         self.fields["planting"].queryset = (
             PlantingRecord.objects
@@ -326,32 +326,42 @@ class IrrigationRecordForm(forms.ModelForm):
             .order_by("-planting_date")
         )
         self.fields["planting"].required = False
-        self.fields["planting"].empty_label = "No specific planting"
+        self.fields["planting"].empty_label = "General irrigation (no planting selected)"
 
         self.fields["started_at"].input_formats = [
             "%Y-%m-%dT%H:%M",
-            "%Y-%m-%d %H:%M:%S",
+            "%Y-%m-%dT%H:%M:%S",
         ]
 
-        self.fields["method"].label = "Irrigation Method"
-        self.fields["duration_minutes"].label = "Duration (minutes)"
-        self.fields["water_volume_liters"].label = "Water Volume (liters)"
+        self.fields["status"].choices = [
+            ("", "Select status"),
+            *IrrigationRecord.Status.choices,
+        ]
+
+        # Display planting options with farm and crop information.
+        self.fields["planting"].label_from_instance = (
+            lambda planting: (
+                f"{planting.crop.crop_name} - "
+                f"{planting.farm.farm_name} - "
+                f"{planting.planting_date:%d %b %Y}"
+            )
+        )
 
     def clean_duration_minutes(self):
-        duration = self.cleaned_data.get("duration_minutes")
+        duration = self.cleaned_data["duration_minutes"]
 
-        if duration is not None and duration < 1:
-            raise forms.ValidationError(
-                "Duration must be at least 1 minute."
+        if duration < 1:
+            raise ValidationError(
+                "Duration must be at least one minute."
             )
 
         return duration
 
     def clean_water_volume_liters(self):
-        volume = self.cleaned_data.get("water_volume_liters")
+        volume = self.cleaned_data["water_volume_liters"]
 
-        if volume is not None and volume < 0:
-            raise forms.ValidationError(
+        if volume < 0:
+            raise ValidationError(
                 "Water volume cannot be negative."
             )
 

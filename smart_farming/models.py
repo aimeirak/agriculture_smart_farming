@@ -3,6 +3,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from farmer_management.models import AuditModel, Farm, PlantingRecord
+from django.db.models import Q, ProtectedError
 
 # Create your models here.
 class SensorDevice(AuditModel):
@@ -247,7 +248,9 @@ class IrrigationRecord(AuditModel):
         validators=[MinValueValidator(0)],
     )
 
-    method = models.CharField(max_length=100)
+    method = models.CharField(
+        max_length=100,
+    )
 
     status = models.CharField(
         max_length=20,
@@ -259,17 +262,17 @@ class IrrigationRecord(AuditModel):
         ordering = ["-started_at"]
         constraints = [
             models.CheckConstraint(
-                condition=models.Q(duration_minutes__gt=0),
+                condition=Q(duration_minutes__gt=0),
                 name="irrigation_duration_positive",
             ),
             models.CheckConstraint(
-                condition=models.Q(water_volume_liters__gte=0),
+                condition=Q(water_volume_liters__gte=0),
                 name="irrigation_water_nonnegative",
             ),
         ]
 
     def clean(self):
-        from django.core.exceptions import ValidationError
+        super().clean()
 
         if (
             self.farm_id
@@ -283,5 +286,15 @@ class IrrigationRecord(AuditModel):
                 )
             })
 
+        if self.status == self.Status.COMPLETED:
+            if self.water_volume_liters is None:
+                raise ValidationError({
+                    "water_volume_liters":
+                        "Water volume is required for completed irrigation."
+                })
+
     def __str__(self):
-        return f"{self.farm.farm_name} - {self.started_at}"
+        return (
+            f"{self.farm.farm_name} - "
+            f"{self.started_at:%d %b %Y %H:%M}"
+        )

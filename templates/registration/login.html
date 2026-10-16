@@ -1,0 +1,121 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | Smart Farming</title>
+
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: #f4f7fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: #fff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+        }
+
+        .brand-icon {
+            color: #3b7ddd;
+            font-size: 32px;
+        }
+
+        .form-control {
+            min-height: 44px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-wrapper">
+    <div class="text-center mb-4">
+        <div class="brand-icon mb-2">
+            <i data-feather="activity"></i>
+        </div>
+        <h3 class="fw-bold">Smart Farming</h3>
+        <p class="text-muted">Agriculture Management System</p>
+    </div>
+
+    <div class="login-card">
+        <h4 class="mb-1">Welcome back</h4>
+        <p class="text-muted mb-4">Sign in to access your dashboard.</p>
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if next and user.is_authenticated %}
+            <div class="alert alert-warning">
+                Your account does not have permission to access that page.
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="hidden" name="next" value="{{ next|default:'' }}">
+
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="id_username"
+                    class="form-control"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    value="{{ form.username.value|default:'' }}"
+                    required
+                    autofocus
+                >
+                {% for error in form.username.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            <div class="mb-4">
+                <label for="id_password" class="form-label">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="id_password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+                {% for error in form.password.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                <i data-feather="log-in" class="me-1"></i>
+                Sign In
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
