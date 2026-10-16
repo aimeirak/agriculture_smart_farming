@@ -1,0 +1,136 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title|default:"Register Agricultural Input" }}{% endblock %}
+{% block page_title %}{{ page_title|default:"Register Agricultural Input" }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                {% if agricultural_input %}
+                    Update Agricultural Input
+                {% else %}
+                    Agricultural Input Registration
+                {% endif %}
+            </h5>
+
+            <p class="text-muted mb-0 mt-2">
+                Register seeds, fertilizers, pesticides, and other agricultural materials.
+            </p>
+        </div>
+
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    <!-- Input Name -->
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.input_name.id_for_label }}"
+                               class="form-label">
+                            Input Name *
+                        </label>
+
+                        {{ form.input_name }}
+
+                        {% for error in form.input_name.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Input Type -->
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.input_type.id_for_label }}"
+                               class="form-label">
+                            Input Type *
+                        </label>
+
+                        {{ form.input_type }}
+
+                        {% for error in form.input_type.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Unit of Measure -->
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.unit_of_measure.id_for_label }}"
+                               class="form-label">
+                            Unit of Measure *
+                        </label>
+
+                        {{ form.unit_of_measure }}
+
+                        {% for error in form.unit_of_measure.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Status -->
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.status.id_for_label }}"
+                               class="form-label">
+                            Status *
+                        </label>
+
+                        {{ form.status }}
+
+                        {% for error in form.status.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-md-12 mb-3">
+                        <label for="{{ form.description.id_for_label }}"
+                               class="form-label">
+                            Description
+                        </label>
+
+                        {{ form.description }}
+
+                        {% for error in form.description.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'agricultural_input_list' %}"
+                       class="btn btn-light">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        {% if agricultural_input %}
+                            Update Input
+                        {% else %}
+                            Register Input
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

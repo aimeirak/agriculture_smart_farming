@@ -1,9 +1,11 @@
 from django.contrib import admin
 
-from .models import AgriculturalInput, Farmer, Farm, Crop, PlantingRecord,PlantingInput
+from .models import AgriculturalInput, Farmer, Farm, Crop, PlantingRecord,PlantingInput,Sector,District
 
 # Register your models here.
 
+admin.site.register(District)
+admin.site.register(Sector)
 @admin.register(Farmer)
 class FarmerAdmin(admin.ModelAdmin):
     list_display = (

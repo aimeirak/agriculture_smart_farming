@@ -1,0 +1,1412 @@
+[
+  {
+    "id": "RW11",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyarugenge",
+      "en": "Nyarugenge",
+      "slug": "nyarugenge"
+    },
+    "code": {
+      "id": "RW11",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW1",
+      "level": 1,
+      "name": {
+        "local": "Kigali City",
+        "en": "Kigali City",
+        "slug": "kigali-city"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW1",
+        "level": 1,
+        "name": {
+          "local": "Kigali City",
+          "en": "Kigali City",
+          "slug": "kigali-city"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 10
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.971",
+      "lon": "30.032"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW12",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Gasabo",
+      "en": "Gasabo",
+      "slug": "gasabo"
+    },
+    "code": {
+      "id": "RW12",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW1",
+      "level": 1,
+      "name": {
+        "local": "Kigali City",
+        "en": "Kigali City",
+        "slug": "kigali-city"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW1",
+        "level": 1,
+        "name": {
+          "local": "Kigali City",
+          "en": "Kigali City",
+          "slug": "kigali-city"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 15
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.884",
+      "lon": "30.133"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW13",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Kicukiro",
+      "en": "Kicukiro",
+      "slug": "kicukiro"
+    },
+    "code": {
+      "id": "RW13",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW1",
+      "level": 1,
+      "name": {
+        "local": "Kigali City",
+        "en": "Kigali City",
+        "slug": "kigali-city"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW1",
+        "level": 1,
+        "name": {
+          "local": "Kigali City",
+          "en": "Kigali City",
+          "slug": "kigali-city"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 10
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.016",
+      "lon": "30.143"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW21",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyanza",
+      "en": "Nyanza",
+      "slug": "nyanza"
+    },
+    "code": {
+      "id": "RW21",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 10
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.344",
+      "lon": "29.783"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW22",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Gisagara",
+      "en": "Gisagara",
+      "slug": "gisagara"
+    },
+    "code": {
+      "id": "RW22",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 13
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.608",
+      "lon": "29.834"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW23",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyaruguru",
+      "en": "Nyaruguru",
+      "slug": "nyaruguru"
+    },
+    "code": {
+      "id": "RW23",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 14
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.686",
+      "lon": "29.537"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW24",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Huye",
+      "en": "Huye",
+      "slug": "huye"
+    },
+    "code": {
+      "id": "RW24",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 14
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.532",
+      "lon": "29.715"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW25",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyamagabe",
+      "en": "Nyamagabe",
+      "slug": "nyamagabe"
+    },
+    "code": {
+      "id": "RW25",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 17
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.4",
+      "lon": "29.465"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW26",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Ruhango",
+      "en": "Ruhango",
+      "slug": "ruhango"
+    },
+    "code": {
+      "id": "RW26",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 9
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.193",
+      "lon": "29.776"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW27",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Muhanga",
+      "en": "Muhanga",
+      "slug": "muhanga"
+    },
+    "code": {
+      "id": "RW27",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 12
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.939",
+      "lon": "29.715"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW28",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Kamonyi",
+      "en": "Kamonyi",
+      "slug": "kamonyi"
+    },
+    "code": {
+      "id": "RW28",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW2",
+      "level": 1,
+      "name": {
+        "local": "Southern Province",
+        "en": "Southern Province",
+        "slug": "southern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW2",
+        "level": 1,
+        "name": {
+          "local": "Southern Province",
+          "en": "Southern Province",
+          "slug": "southern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 12
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.028",
+      "lon": "29.902"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW31",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Karongi",
+      "en": "Karongi",
+      "slug": "karongi"
+    },
+    "code": {
+      "id": "RW31",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 13
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.174",
+      "lon": "29.392"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW32",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Rutsiro",
+      "en": "Rutsiro",
+      "slug": "rutsiro"
+    },
+    "code": {
+      "id": "RW32",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 13
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.9",
+      "lon": "29.346"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW33",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Rubavu",
+      "en": "Rubavu",
+      "slug": "rubavu"
+    },
+    "code": {
+      "id": "RW33",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 12
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.641",
+      "lon": "29.314"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW34",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyabihu",
+      "en": "Nyabihu",
+      "slug": "nyabihu"
+    },
+    "code": {
+      "id": "RW34",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 12
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.642",
+      "lon": "29.51"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW35",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Ngororero",
+      "en": "Ngororero",
+      "slug": "ngororero"
+    },
+    "code": {
+      "id": "RW35",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 13
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.904",
+      "lon": "29.537"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW36",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Rusizi",
+      "en": "Rusizi",
+      "slug": "rusizi"
+    },
+    "code": {
+      "id": "RW36",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 18
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.558",
+      "lon": "29.115"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW37",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyamasheke",
+      "en": "Nyamasheke",
+      "slug": "nyamasheke"
+    },
+    "code": {
+      "id": "RW37",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW3",
+      "level": 1,
+      "name": {
+        "local": "Western Province",
+        "en": "Western Province",
+        "slug": "western-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW3",
+        "level": 1,
+        "name": {
+          "local": "Western Province",
+          "en": "Western Province",
+          "slug": "western-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 15
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.358",
+      "lon": "29.153"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW41",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Rulindo",
+      "en": "Rulindo",
+      "slug": "rulindo"
+    },
+    "code": {
+      "id": "RW41",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW4",
+      "level": 1,
+      "name": {
+        "local": "Northern Province",
+        "en": "Northern Province",
+        "slug": "northern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW4",
+        "level": 1,
+        "name": {
+          "local": "Northern Province",
+          "en": "Northern Province",
+          "slug": "northern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 17
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.752",
+      "lon": "29.999"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW42",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Gakenke",
+      "en": "Gakenke",
+      "slug": "gakenke"
+    },
+    "code": {
+      "id": "RW42",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW4",
+      "level": 1,
+      "name": {
+        "local": "Northern Province",
+        "en": "Northern Province",
+        "slug": "northern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW4",
+        "level": 1,
+        "name": {
+          "local": "Northern Province",
+          "en": "Northern Province",
+          "slug": "northern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 19
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.711",
+      "lon": "29.783"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW43",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Musanze",
+      "en": "Musanze",
+      "slug": "musanze"
+    },
+    "code": {
+      "id": "RW43",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW4",
+      "level": 1,
+      "name": {
+        "local": "Northern Province",
+        "en": "Northern Province",
+        "slug": "northern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW4",
+        "level": 1,
+        "name": {
+          "local": "Northern Province",
+          "en": "Northern Province",
+          "slug": "northern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 15
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.492",
+      "lon": "29.608"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW44",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Burera",
+      "en": "Burera",
+      "slug": "burera"
+    },
+    "code": {
+      "id": "RW44",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW4",
+      "level": 1,
+      "name": {
+        "local": "Northern Province",
+        "en": "Northern Province",
+        "slug": "northern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW4",
+        "level": 1,
+        "name": {
+          "local": "Northern Province",
+          "en": "Northern Province",
+          "slug": "northern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 17
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.461",
+      "lon": "29.827"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW45",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Gicumbi",
+      "en": "Gicumbi",
+      "slug": "gicumbi"
+    },
+    "code": {
+      "id": "RW45",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW4",
+      "level": 1,
+      "name": {
+        "local": "Northern Province",
+        "en": "Northern Province",
+        "slug": "northern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW4",
+        "level": 1,
+        "name": {
+          "local": "Northern Province",
+          "en": "Northern Province",
+          "slug": "northern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 21
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.619",
+      "lon": "30.11"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW51",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Rwamagana",
+      "en": "Rwamagana",
+      "slug": "rwamagana"
+    },
+    "code": {
+      "id": "RW51",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 14
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.979",
+      "lon": "30.355"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW52",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Nyagatare",
+      "en": "Nyagatare",
+      "slug": "nyagatare"
+    },
+    "code": {
+      "id": "RW52",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 14
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.298",
+      "lon": "30.406"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW53",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Gatsibo",
+      "en": "Gatsibo",
+      "slug": "gatsibo"
+    },
+    "code": {
+      "id": "RW53",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 14
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.667",
+      "lon": "30.501"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW54",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Kayonza",
+      "en": "Kayonza",
+      "slug": "kayonza"
+    },
+    "code": {
+      "id": "RW54",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 12
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-1.862",
+      "lon": "30.629"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW55",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Kirehe",
+      "en": "Kirehe",
+      "slug": "kirehe"
+    },
+    "code": {
+      "id": "RW55",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 12
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.196",
+      "lon": "30.679"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW56",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Ngoma",
+      "en": "Ngoma",
+      "slug": "ngoma"
+    },
+    "code": {
+      "id": "RW56",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 14
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.198",
+      "lon": "30.46"
+    },
+    "metadata": {},
+    "source": {}
+  },
+  {
+    "id": "RW57",
+    "level": 2,
+    "level_name": {
+      "local": "Akarere",
+      "en": "District"
+    },
+    "name": {
+      "local": "Bugesera",
+      "en": "Bugesera",
+      "slug": "bugesera"
+    },
+    "code": {
+      "id": "RW57",
+      "iso": null
+    },
+    "parent": {
+      "id": "RW5",
+      "level": 1,
+      "name": {
+        "local": "Eastern Province",
+        "en": "Eastern Province",
+        "slug": "eastern-province"
+      }
+    },
+    "ancestors": [
+      {
+        "id": "RW5",
+        "level": 1,
+        "name": {
+          "local": "Eastern Province",
+          "en": "Eastern Province",
+          "slug": "eastern-province"
+        }
+      }
+    ],
+    "children_count": {
+      "sector": 15
+    },
+    "zip_codes": [],
+    "geo": {
+      "lat": "-2.233",
+      "lon": "30.167"
+    },
+    "metadata": {},
+    "source": {}
+  }
+]

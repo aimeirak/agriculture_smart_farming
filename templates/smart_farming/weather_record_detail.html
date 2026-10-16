@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Weather Record Details{% endblock %}
+
+{% block page_title %}Weather Record Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h5 class="card-title mb-0">Weather Record Details</h5>
+                <p class="text-muted mb-0">
+                    Weather observations recorded for
+                    {{ weather_record.farm.farm_name }}.
+                </p>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a href="{% url 'weather_record_list' %}"
+                   class="btn btn-light">
+                    <i data-feather="arrow-left" class="align-middle"></i>
+                    Back
+                </a>
+
+                <a href="{% url 'weather_record_update' weather_record.pk %}"
+                   class="btn btn-primary">
+                    <i data-feather="edit-2" class="align-middle"></i>
+                    Edit
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <h6 class="text-muted">Farm</h6>
+                    <h5>{{ weather_record.farm.farm_name }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h6 class="text-muted">Observation Date and Time</h6>
+                    <h5>{{ weather_record.observed_at|date:"d M Y, H:i" }}</h5>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-light h-100 mb-0">
+                        <div class="card-body">
+                            <h6 class="text-muted">
+                                <i data-feather="cloud-rain"
+                                   class="align-middle"></i>
+                                Rainfall
+                            </h6>
+
+                            <h3 class="mb-0">
+                                {{ weather_record.rainfall_mm|floatformat:2 }}
+                                <small class="text-muted fs-6">mm</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-light h-100 mb-0">
+                        <div class="card-body">
+                            <h6 class="text-muted">
+                                <i data-feather="thermometer"
+                                   class="align-middle"></i>
+                                Temperature
+                            </h6>
+
+                            <h3 class="mb-0">
+                                {% if weather_record.temperature_c is not None %}
+                                    {{ weather_record.temperature_c|floatformat:2 }}
+                                    <small class="text-muted fs-6">°C</small>
+                                {% else %}
+                                    <span class="text-muted fs-5">Not recorded</span>
+                                {% endif %}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-light h-100 mb-0">
+                        <div class="card-body">
+                            <h6 class="text-muted">
+                                <i data-feather="droplet"
+                                   class="align-middle"></i>
+                                Humidity
+                            </h6>
+
+                            <h3 class="mb-0">
+                                {% if weather_record.humidity_pct is not None %}
+                                    {{ weather_record.humidity_pct|floatformat:2 }}
+                                    <small class="text-muted fs-6">%</small>
+                                {% else %}
+                                    <span class="text-muted fs-5">Not recorded</span>
+                                {% endif %}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <h6 class="text-muted">Data Source</h6>
+                    <span class="badge bg-info fs-6">
+                        {{ weather_record.get_source_display }}
+                    </span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <h6 class="text-muted">Weather Record ID</h6>
+                    <small class="text-break">{{ weather_record.pk }}</small>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-end">
+                <form method="post"
+                      action="{% url 'weather_record_delete' weather_record.pk %}"
+                      onsubmit="return confirm('Are you sure you want to delete this weather record?');">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i data-feather="trash-2" class="align-middle"></i>
+                        Delete Weather Record
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
