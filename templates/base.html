@@ -285,9 +285,11 @@
                            data-bs-toggle="dropdown"
                            aria-expanded="false">
 
-                            <img src="{% static 'img/avatars/avatar.jpg' %}"
-                                 class="avatar img-fluid rounded-circle me-2"
-                                 alt="User avatar">
+							<span class="avatar bg-light rounded-circle me-1
+										d-inline-flex align-items-center justify-content-center"
+								style="width: 32px; height: 32px;">
+								<i data-feather="user"></i>
+							</span>
 
                             <span class="text-dark">
                                 {% if request.user.is_authenticated %}

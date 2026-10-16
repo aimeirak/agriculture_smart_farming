@@ -410,9 +410,7 @@ def weather_record_delete(request, pk):
 
     return redirect("weather_record_list")
 
-
 # Irrigation Record Views
-
 def irrigation_record_list(request):
     irrigation_records = (
         IrrigationRecord.objects
@@ -420,19 +418,17 @@ def irrigation_record_list(request):
         .all()
     )
 
-    search = request.GET.get("search", "").strip()
+    search = request.GET.get("q", "").strip()
     selected_status = request.GET.get("status", "").strip()
 
     if search:
         irrigation_records = irrigation_records.filter(
             Q(farm__farm_name__icontains=search)
-            | Q(method__icontains=search)
             | Q(planting__crop__crop_name__icontains=search)
+            | Q(method__icontains=search)
         )
 
-    valid_statuses = [
-        value for value, label in IrrigationRecord.Status.choices
-    ]
+    valid_statuses = dict(IrrigationRecord.Status.choices)
 
     if selected_status in valid_statuses:
         irrigation_records = irrigation_records.filter(
@@ -468,7 +464,10 @@ def irrigation_record_create(request):
                 "Irrigation record created successfully.",
             )
 
-            return redirect("irrigation_record_list")
+            return redirect(
+                "irrigation_record_detail",
+                pk=irrigation_record.pk,
+            )
     else:
         form = IrrigationRecordForm()
 
@@ -482,6 +481,7 @@ def irrigation_record_create(request):
         },
     )
 
+
 def irrigation_record_detail(request, pk):
     irrigation_record = get_object_or_404(
         IrrigationRecord.objects.select_related(
@@ -494,14 +494,18 @@ def irrigation_record_detail(request, pk):
 
     return render(
         request,
-        "smart_farming/irrigation_record_list.html",
+        "smart_farming/irrigation_record_detail.html",
         {"irrigation_record": irrigation_record},
     )
 
 
 def irrigation_record_update(request, pk):
     irrigation_record = get_object_or_404(
-        IrrigationRecord.objects.select_related("farm", "planting"),
+        IrrigationRecord.objects.select_related(
+            "farm",
+            "planting",
+            "planting__crop",
+        ),
         pk=pk,
     )
 
@@ -524,11 +528,13 @@ def irrigation_record_update(request, pk):
                 pk=irrigation_record.pk,
             )
     else:
-        form = IrrigationRecordForm(instance=irrigation_record)
+        form = IrrigationRecordForm(
+            instance=irrigation_record,
+        )
 
     return render(
         request,
-        "irrigation_record_form.html",
+        "smart_farming/irrigation_record_form.html",
         {
             "form": form,
             "irrigation_record": irrigation_record,
@@ -555,7 +561,8 @@ def irrigation_record_delete(request, pk):
     except ProtectedError:
         messages.error(
             request,
-            "This irrigation record cannot be deleted because it is referenced by other records.",
+            "This irrigation record cannot be deleted because "
+            "other records depend on it.",
         )
 
     return redirect("irrigation_record_list")

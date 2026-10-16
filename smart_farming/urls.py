@@ -31,4 +31,11 @@ urlpatterns = [
     path( "irrigation-records/<uuid:pk>/",views.irrigation_record_detail,name="irrigation_record_detail",),
     path("irrigation-records/<uuid:pk>/update/",views.irrigation_record_update,name="irrigation_record_update",),
     path("irrigation-records/<uuid:pk>/delete/",views.irrigation_record_delete,name="irrigation_record_delete",),
+
+    # Irrigation Record URLs
+    path( "irrigation-records/",views.irrigation_record_list,name="irrigation_record_list",),
+    path("irrigation-records/create/",views.irrigation_record_create,name="irrigation_record_create",),
+    path("irrigation-records/<uuid:pk>/",views.irrigation_record_detail,name="irrigation_record_detail",),
+    path("irrigation-records/<uuid:pk>/update/",views.irrigation_record_update,name="irrigation_record_update",),
+    path("irrigation-records/<uuid:pk>/delete/",views.irrigation_record_delete,name="irrigation_record_delete",),
 ]
