@@ -1,0 +1,382 @@
+/* AgriSmart AdminKit design system — full-width responsive layout */
+:root {
+  --agri-primary: #2563eb;
+  --agri-primary-dark: #1d4ed8;
+  --agri-green: #16a36a;
+  --agri-ink: #172b4d;
+  --agri-muted: #718096;
+  --agri-border: #e5ebf3;
+  --agri-surface: #ffffff;
+  --agri-canvas: #f4f7fb;
+  --agri-radius: 12px;
+  --agri-shadow: 0 3px 14px rgba(25, 42, 70, .055);
+}
+
+html, body {
+  min-height: 100%;
+  background: var(--agri-canvas);
+  color: #344054;
+}
+body {
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  font-size: .875rem;
+}
+.wrapper.agri-app-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+.agri-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: calc(100% - 260px);
+  min-width: 0;
+  max-width: none;
+}
+.agri-content {
+  flex: 1 0 auto;
+  width: 100%;
+  min-width: 0;
+  padding: 1.5rem clamp(1rem, 2vw, 2rem) 2rem;
+  min-height: calc(100vh - 130px);
+}
+.agri-page-container,
+.content > .container-fluid,
+.content .container-fluid {
+  width: 100%;
+  max-width: none !important;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  background: #172b46;
+  flex: 0 0 260px;
+}
+.sidebar-content {
+  background: #172b46;
+}
+.sidebar-brand {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .2px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.sidebar-header {
+  color: #9aabc2;
+  padding: 1.1rem 1.35rem .45rem;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.sidebar-link {
+  margin: 2px 10px;
+  padding: .68rem .85rem;
+  border-radius: 8px;
+  transition: background .18s ease, color .18s ease;
+}
+.sidebar-link:hover {
+  background: rgba(255,255,255,.09);
+  color: #fff !important;
+}
+.sidebar-item.active > .sidebar-link,
+.sidebar-link[aria-current="page"] {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* Header and page title */
+.agri-topbar,
+.navbar-bg {
+  min-height: 64px;
+  background: #fff;
+  border-bottom: 1px solid var(--agri-border);
+  box-shadow: none;
+  padding-left: 1.25rem;
+  padding-right: 1.5rem;
+}
+.navbar .nav-link { color: var(--agri-ink); }
+.page-heading,
+.content h1.h3 {
+  color: var(--agri-ink);
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.content h1, .content h2, .content h3,
+.content h4, .content h5 {
+  color: var(--agri-ink);
+}
+
+/* Cards */
+.card {
+  border: 1px solid var(--agri-border);
+  border-radius: var(--agri-radius);
+  box-shadow: var(--agri-shadow);
+  background: var(--agri-surface);
+  margin-bottom: 1.25rem;
+}
+.card-header {
+  padding: 1rem 1.2rem;
+  background: #fff;
+  border-bottom: 1px solid #edf1f6;
+  border-radius: var(--agri-radius) var(--agri-radius) 0 0 !important;
+}
+.card-body { padding: 1.2rem; }
+.card-title {
+  color: var(--agri-ink);
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.card .text-muted, .text-muted { color: var(--agri-muted) !important; }
+
+/* Tables */
+.table-responsive { border-radius: 8px; }
+.table {
+  --bs-table-bg: transparent;
+  margin-bottom: 0;
+  color: #344054;
+}
+.table thead th {
+  background: #f3f6fb;
+  color: #475467;
+  border-bottom: 1px solid #e3eaf3;
+  font-size: .75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: .82rem .9rem;
+}
+.table tbody td {
+  padding: .78rem .9rem;
+  border-color: #edf1f6;
+  vertical-align: middle;
+}
+.table tbody tr:hover { background: #f8fbff; }
+.table tbody tr:last-child td { border-bottom: 0; }
+
+/* Forms and actions */
+.form-label {
+  color: #344054;
+  font-weight: 600;
+  margin-bottom: .4rem;
+}
+.form-control, .form-select {
+  min-height: 42px;
+  border-color: #dce4ee;
+  border-radius: 8px;
+  color: #344054;
+  box-shadow: none;
+}
+textarea.form-control { min-height: 100px; }
+.form-control:focus, .form-select:focus {
+  border-color: #8bb4fa;
+  box-shadow: 0 0 0 .2rem rgba(37,99,235,.10);
+}
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: .55rem .9rem;
+}
+.btn-sm { border-radius: 7px; padding: .35rem .6rem; }
+.btn-primary { background: var(--agri-primary); border-color: var(--agri-primary); }
+.btn-primary:hover { background: var(--agri-primary-dark); border-color: var(--agri-primary-dark); }
+.btn-success { background: var(--agri-green); border-color: var(--agri-green); }
+.btn-light, .btn-outline-secondary { border-color: #dce4ee; }
+.badge { border-radius: 6px; font-weight: 650; padding: .38em .62em; }
+.alert { border: 1px solid transparent; border-radius: 10px; }
+.pagination .page-link { border-color: var(--agri-border); color: var(--agri-primary); }
+.pagination .active .page-link { background: var(--agri-primary); border-color: var(--agri-primary); }
+
+/* Dashboard sizing: allow Bootstrap columns to use the full content width */
+.content .row {
+  --bs-gutter-x: 1.25rem;
+}
+.content .row > [class*="col-"] { min-width: 0; }
+.dashboard-chart { width: 100%; }
+canvas { max-width: 100%; }
+
+/* Footer */
+.agri-footer {
+  background: #fff;
+  border-top: 1px solid var(--agri-border);
+  padding: 1.1rem clamp(1rem, 2vw, 2rem);
+  margin-top: auto;
+}
+.agri-footer .container-fluid {
+  width: 100%;
+  max-width: none;
+}
+
+/* Notifications */
+#message-popup-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  width: min(440px, calc(100% - 32px));
+}
+
+@media (max-width: 991.98px) {
+  .agri-main { width: 100%; }
+  .agri-content { padding: 1.15rem 1rem 1.5rem; }
+}
+@media (max-width: 767.98px) {
+  .sidebar { flex-basis: 260px; }
+  .agri-content { padding: 1rem .85rem 1.5rem; }
+  .card-header, .card-body { padding: .9rem; }
+  .table thead th, .table tbody td { padding: .68rem .7rem; }
+  .content .row > [class*="col-"] { margin-bottom: .25rem; }
+  .agri-footer .text-end { text-align: left !important; margin-top: 10px; }
+}
+
+
+/* Refined Smart Farming sidebar — flat, calm and consistent */
+:root {
+  --agri-sidebar-bg: #172b46;
+  --agri-sidebar-hover: rgba(255,255,255,.075);
+  --agri-sidebar-active: #245fc7;
+  --agri-sidebar-text: #c4d0df;
+  --agri-sidebar-muted: #8fa3bc;
+}
+.sidebar,
+.sidebar-content,
+.sidebar .simplebar-content {
+  background: var(--agri-sidebar-bg) !important;
+}
+.sidebar {
+  width: 260px !important;
+  min-width: 260px !important;
+  flex: 0 0 260px !important;
+  border-right: 1px solid rgba(255,255,255,.055);
+}
+.sidebar-brand {
+  height: 72px;
+  min-height: 72px;
+  margin: 0 !important;
+  padding: 0 22px !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  color: #fff !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255,255,255,.085) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  letter-spacing: -.2px !important;
+}
+.sidebar-brand i,
+.sidebar-brand svg {
+  width: 19px;
+  height: 19px;
+  color: #65d6a0;
+  stroke-width: 2.4;
+}
+.sidebar-nav {
+  padding: 13px 11px 24px !important;
+  margin: 0 !important;
+}
+.sidebar-header {
+  padding: 19px 12px 7px !important;
+  margin: 0 !important;
+  color: #91a8c4 !important;
+  font-size: 10px !important;
+  line-height: 1.2;
+  font-weight: 700 !important;
+  letter-spacing: 1.05px !important;
+  text-transform: uppercase;
+}
+.sidebar-header:first-child {
+  padding-top: 8px !important;
+}
+.sidebar-item {
+  margin: 2px 0 !important;
+  padding: 0 !important;
+}
+.sidebar-link {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  margin: 0 !important;
+  padding: 9px 12px !important;
+  border-radius: 7px !important;
+  background: transparent !important;
+  color: var(--agri-sidebar-text) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.25;
+  transition: background .16s ease, color .16s ease, transform .16s ease;
+}
+.sidebar-link span {
+  color: inherit !important;
+  white-space: normal;
+}
+.sidebar-link i,
+.sidebar-link svg {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px;
+  margin: 0 !important;
+  color: #91a4bb !important;
+  stroke-width: 1.8;
+  opacity: .95;
+}
+.sidebar-link:hover {
+  background: var(--agri-sidebar-hover) !important;
+  color: #fff !important;
+  transform: translateX(1px);
+}
+.sidebar-link:hover i,
+.sidebar-link:hover svg {
+  color: #dce9fa !important;
+}
+.sidebar-item.active > .sidebar-link,
+.sidebar-item > .sidebar-link.active,
+.sidebar-link[aria-current="page"] {
+  background: var(--agri-sidebar-active) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 9px rgba(0,0,0,.12);
+  font-weight: 600 !important;
+}
+.sidebar-item.active > .sidebar-link::before,
+.sidebar-item > .sidebar-link.active::before,
+.sidebar-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 0 4px 4px 0;
+  background: #6ee7b7;
+}
+.sidebar-item.active > .sidebar-link i,
+.sidebar-item.active > .sidebar-link svg,
+.sidebar-link.active i,
+.sidebar-link.active svg,
+.sidebar-link[aria-current="page"] i,
+.sidebar-link[aria-current="page"] svg {
+  color: #fff !important;
+}
+.sidebar .simplebar-track.simplebar-vertical {
+  width: 5px;
+}
+.sidebar .simplebar-scrollbar:before {
+  background: rgba(255,255,255,.25);
+}
+@media (max-width: 991.98px) {
+  .sidebar {
+    width: 260px !important;
+    min-width: 260px !important;
+    flex-basis: 260px !important;
+  }
+}

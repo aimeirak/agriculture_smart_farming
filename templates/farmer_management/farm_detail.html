@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Farm Details{% endblock %}
+{% block page_title %}Farm Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <p class="text-muted mb-0">Farm information and ownership</p>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a href="{% url 'farm_list' %}" class="btn btn-light">
+                Back to Farms
+            </a>
+
+            <a href="{% url 'farm_update' farm.pk %}"
+               class="btn btn-primary">
+                Edit Farm
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">General Information</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <small class="text-muted">Farm Name</small>
+                    <h5>{{ farm.farm_name }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <small class="text-muted">Farm Owner</small>
+                    <h5>{{ farm.farmer.first_name }}
+                        {{ farm.farmer.last_name }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <small class="text-muted">District</small>
+                    <h5>{{ farm.district.name }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <small class="text-muted">Sector</small>
+                    <h5>{{ farm.sector.name }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <small class="text-muted">Area</small>
+                    <h5>{{ farm.area_hectares }} hectares</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <small class="text-muted">Status</small>
+                    <div>
+                        {% if farm.status == "ACTIVE" %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+```

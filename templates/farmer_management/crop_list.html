@@ -1,0 +1,254 @@
+
+{% extends "base.html" %}
+
+{% block title %}Crop Management | Smart Farming{% endblock %}
+
+{% block page_title %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <div>
+        <h1 class="h3 mb-1">Crop Management</h1>
+        <p class="text-muted mb-0">
+            Manage crops available across your registered farms.
+        </p>
+    </div>
+
+    <a href="{% url 'crop_create' %}" class="btn btn-success">
+        <i data-feather="plus" class="me-1"></i>
+        Register Crop
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<!-- Statistics -->
+<div class="row">
+    <div class="col-sm-6 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="card-title text-muted mb-2">Total Crops</h5>
+                        <h2 class="mt-1 mb-0">{{ total_crops }}</h2>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-success bg-opacity-10 rounded p-3">
+                            <i data-feather="layers" class="text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="card-title text-muted mb-2">Active Crops</h5>
+                        <h2 class="mt-1 mb-0 text-success">{{ active_crops }}</h2>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-success bg-opacity-10 rounded p-3">
+                            <i data-feather="check-circle" class="text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="card-title text-muted mb-2">Inactive Crops</h5>
+                        <h2 class="mt-1 mb-0 text-danger">{{ inactive_crops }}</h2>
+                    </div>
+                    <div class="col-auto">
+                        <div class="bg-danger bg-opacity-10 rounded p-3">
+                            <i data-feather="pause-circle" class="text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Crop table -->
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h5 class="card-title mb-1">Registered Crops</h5>
+                <h6 class="card-subtitle text-muted">
+                    Search and manage your crop records.
+                </h6>
+            </div>
+
+            <form method="get" action="{% url 'crop_list' %}"
+                  class="d-flex gap-2">
+                <input
+                    type="search"
+                    name="search"
+                    value="{{ search }}"
+                    class="form-control"
+                    placeholder="Search crops..."
+                    aria-label="Search crops"
+                >
+                <button type="submit" class="btn btn-success">
+                    <i data-feather="search" class="me-1"></i>
+                    Search
+                </button>
+
+                {% if search %}
+                    <a href="{% url 'crop_list' %}"
+                       class="btn btn-outline-secondary">
+                        Clear
+                    </a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover my-0 align-middle">
+            <thead>
+                <tr>
+                    <th>Crop Name</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for crop in crops %}
+                    <tr>
+                        <td>
+                            <strong>{{ crop.crop_name }}</strong>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-info bg-opacity-10 text-info">
+                                {{ crop.get_crop_category_display }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {% if crop.description %}
+                                {{ crop.description|truncatechars:60 }}
+                            {% else %}
+                                <span class="text-muted">No description</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if crop.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <a href="{% url 'crop_detail' crop.pk %}"
+                                   class="btn btn-sm btn-outline-info"
+                                   title="View crop"
+                                   aria-label="View {{ crop.crop_name }}">
+                                    <i data-feather="eye"></i>
+                                </a>
+
+                                <a href="{% url 'crop_update' crop.pk %}"
+                                   class="btn btn-sm btn-outline-primary"
+                                   title="Edit crop"
+                                   aria-label="Edit {{ crop.crop_name }}">
+                                    <i data-feather="edit-2"></i>
+                                </a>
+
+                                <form method="post"
+                                      action="{% url 'crop_delete' crop.pk %}"
+                                      class="d-inline delete-crop-form"
+                                      data-crop-name="{{ crop.crop_name|escape }}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                            title="Delete crop"
+                                            aria-label="Delete {{ crop.crop_name }}">
+                                        <i data-feather="trash-2"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-5">
+                            <i data-feather="layers"
+                               class="text-muted mb-2"
+                               style="width: 40px; height: 40px;"></i>
+
+                            <h5 class="mt-2">No crops found</h5>
+
+                            <p class="text-muted mb-3">
+                                {% if search %}
+                                    No crops match "{{ search }}".
+                                    Try a different search term.
+                                {% else %}
+                                    You haven't registered any crops yet.
+                                {% endif %}
+                            </p>
+
+                            {% if search %}
+                                <a href="{% url 'crop_list' %}"
+                                   class="btn btn-outline-secondary">
+                                    Clear Search
+                                </a>
+                            {% else %}
+                                <a href="{% url 'crop_create' %}"
+                                   class="btn btn-success">
+                                    <i data-feather="plus" class="me-1"></i>
+                                    Register First Crop
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card-footer text-muted">
+        Showing {{ crops|length }} crop{{ crops|length|pluralize }}
+        {% if search %} matching "{{ search }}"{% endif %}.
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-crop-form").forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const cropName = form.dataset.cropName || "this crop";
+
+            if (!window.confirm(
+                `Are you sure you want to delete "${cropName}"?`
+            )) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    if (window.feather) {
+        window.feather.replace();
+    }
+});
+</script>
+{% endblock %}

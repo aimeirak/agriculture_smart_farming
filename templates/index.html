@@ -1,0 +1,156 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Agriculture Dashboard{% endblock %}
+{% block page_title %}Agriculture Dashboard{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+.dashboard-card{min-height:122px}.dashboard-card .metric{font-size:1.7rem;font-weight:500;color:#111}.dashboard-muted{color:#98a2ad;font-size:.8rem}.dashboard-icon{width:2rem;height:2rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#d8e7ff;color:#3b7ddd}.dashboard-chart{position:relative;height:250px}.dashboard-table th{font-size:.78rem;white-space:nowrap}.dashboard-table td{font-size:.8rem;vertical-align:middle}.dashboard-empty{text-align:center;padding:1.5rem;color:#98a2ad}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-xl-5"><div class="row">
+      <div class="col-sm-6"><div class="card dashboard-card"><div class="card-body"><div class="d-flex justify-content-between"><span class="dashboard-muted">Farms</span><span class="dashboard-icon"><i data-feather="map"></i></span></div><div class="metric mt-1">{{ total_farms|default:0 }}</div><div class="dashboard-muted">Registered farms</div></div></div></div>
+      <div class="col-sm-6"><div class="card dashboard-card"><div class="card-body"><div class="d-flex justify-content-between"><span class="dashboard-muted">Farmers</span><span class="dashboard-icon"><i data-feather="users"></i></span></div><div class="metric mt-1">{{ total_farmers|default:0 }}</div><div class="dashboard-muted">Registered farmers</div></div></div></div>
+      <div class="col-sm-6"><div class="card dashboard-card"><div class="card-body"><div class="d-flex justify-content-between"><span class="dashboard-muted">Planting Records</span><span class="dashboard-icon"><i data-feather="calendar"></i></span></div><div class="metric mt-1">{{ total_plantings|default:0 }}</div><div class="dashboard-muted">Total crop plantings</div></div></div></div>
+      <div class="col-sm-6"><div class="card dashboard-card"><div class="card-body"><div class="d-flex justify-content-between"><span class="dashboard-muted">Irrigation Records</span><span class="dashboard-icon"><i data-feather="droplet"></i></span></div><div class="metric mt-1">{{ total_irrigation_records|default:0 }}</div><div class="dashboard-muted">{{ total_water_used|default:0|floatformat:2 }} L completed water use</div></div></div></div>
+    </div></div>
+    <div class="col-xl-7"><div class="card flex-fill w-100"><div class="card-header"><h5 class="card-title mb-0">Monthly Rainfall &amp; Irrigation</h5><div class="dashboard-muted">Recorded values for {{ current_year }}</div></div><div class="card-body"><div class="dashboard-chart"><canvas id="chartjs-dashboard-line"></canvas></div></div></div></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-3 col-xxl-3 d-flex"><div class="card flex-fill w-100"><div class="card-header"><h5 class="card-title mb-0">Planting Status</h5></div><div class="card-body">
+      <div class="d-flex justify-content-between mb-2"><span>Planned</span><strong>{{ planned_plantings|default:0 }}</strong></div><div class="progress mb-3" style="height:6px"><div class="progress-bar bg-primary" style="width:{% if total_plantings %}{% widthratio planned_plantings total_plantings 100 %}{% else %}0{% endif %}%"></div></div>
+      <div class="d-flex justify-content-between mb-2"><span>Growing</span><strong>{{ growing_plantings|default:0 }}</strong></div><div class="progress mb-3" style="height:6px"><div class="progress-bar bg-success" style="width:{% if total_plantings %}{% widthratio growing_plantings total_plantings 100 %}{% else %}0{% endif %}%"></div></div>
+      <div class="d-flex justify-content-between mb-2"><span>Harvested</span><strong>{{ harvested_plantings|default:0 }}</strong></div><div class="progress" style="height:6px"><div class="progress-bar bg-info" style="width:{% if total_plantings %}{% widthratio harvested_plantings total_plantings 100 %}{% else %}0{% endif %}%"></div></div><hr><div class="d-flex justify-content-between"><span class="dashboard-muted">Total planted area</span><strong>{{ total_planted_area|default:0|floatformat:2 }} ha</strong></div>
+    </div></div></div>
+    <div class="col-xl-6 col-xxl-6 d-flex"><div class="card flex-fill w-100"><div class="card-header"><h5 class="card-title mb-0">Smart Farming Overview</h5></div><div class="card-body"><div class="row text-center">
+      <div class="col-6 col-md-3 mb-4"><div class="h2 mb-1">{{ total_crops|default:0 }}</div><div class="dashboard-muted">Crops</div></div><div class="col-6 col-md-3 mb-4"><div class="h2 mb-1">{{ total_agricultural_inputs|default:0 }}</div><div class="dashboard-muted">Agricultural Inputs</div></div><div class="col-6 col-md-3 mb-4"><div class="h2 mb-1">{{ total_sensor_devices|default:0 }}</div><div class="dashboard-muted">Sensor Devices</div></div><div class="col-6 col-md-3 mb-4"><div class="h2 mb-1">{{ active_sensor_devices|default:0 }}</div><div class="dashboard-muted">Active Sensors</div></div>
+      <div class="col-6 col-md-3"><div class="h2 mb-1">{{ total_sensor_readings|default:0 }}</div><div class="dashboard-muted">Sensor Readings</div></div><div class="col-6 col-md-3"><div class="h2 mb-1">{{ total_weather_records|default:0 }}</div><div class="dashboard-muted">Weather Records</div></div><div class="col-6 col-md-3"><div class="h2 mb-1">{{ completed_irrigations|default:0 }}</div><div class="dashboard-muted">Completed Irrigations</div></div><div class="col-6 col-md-3"><div class="h2 mb-1">{{ cancelled_irrigations|default:0 }}</div><div class="dashboard-muted">Cancelled Irrigations</div></div>
+    </div></div></div></div>
+    <div class="col-xl-3 col-xxl-3 d-flex"><div class="card flex-fill w-100"><div class="card-header"><h5 class="card-title mb-0">Irrigation Status</h5></div><div class="card-body"><div class="dashboard-chart" style="height:190px"><canvas id="chartjs-dashboard-pie"></canvas></div><div class="d-flex justify-content-between border-bottom py-2"><span>Planned</span><strong>{{ planned_irrigations|default:0 }}</strong></div><div class="d-flex justify-content-between border-bottom py-2"><span>Completed</span><strong>{{ completed_irrigations|default:0 }}</strong></div><div class="d-flex justify-content-between py-2"><span>Cancelled</span><strong>{{ cancelled_irrigations|default:0 }}</strong></div></div></div></div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-12 d-flex"><div class="card flex-fill">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div><h5 class="card-title mb-0">AI Irrigation Predictions</h5><div class="dashboard-muted">Latest model outputs from sensor and weather observations</div></div>
+        <a href="{% url 'prediction_list' %}" class="btn btn-sm btn-primary">View predictions</a>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3"><div class="col-md-3"><div class="dashboard-muted">Saved predictions</div><div class="h3">{{ total_predictions|default:0 }}</div></div><div class="col-md-3"><div class="dashboard-muted">Irrigation recommended</div><div class="h3">{{ irrigation_recommendations|default:0 }}</div></div></div>
+        <div class="table-responsive"><table class="table table-hover my-0 dashboard-table"><thead><tr><th>Farm</th><th>Decision</th><th>Probability</th><th>Model</th><th>Date</th></tr></thead><tbody>
+        {% for prediction in recent_predictions %}<tr><td>{{ prediction.farm.farm_name }}</td><td><span class="badge bg-{% if prediction.decision == 'REQUIRED' %}warning{% else %}success{% endif %}">{{ prediction.get_decision_display }}</span></td><td>{{ prediction.probability|floatformat:1 }}</td><td>{{ prediction.model_name }}</td><td>{{ prediction.predicted_at|date:"d M Y H:i" }}</td></tr>{% empty %}<tr><td colspan="5" class="dashboard-empty">No AI predictions yet. Train the models and run predictions on sensor readings.</td></tr>{% endfor %}
+        </tbody></table></div>
+      </div></div></div>
+  </div>
+
+  <!-- AI ANALYTICS -->
+  <div class="row mt-2">
+    <div class="col-12"><div class="card mb-3">
+      <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div><h5 class="card-title mb-0"><i data-feather="cpu" class="me-2"></i>AI & Predictive Analytics</h5>
+          <div class="dashboard-muted">Machine-learning evaluation and insights generated from your farm data</div></div>
+        <span class="badge bg-info">Training data: {{ model_dataset_type|default:"not trained"|title }}</span>
+      </div>
+      <div class="card-body"><div class="row g-3">
+        <div class="col-6 col-lg-3"><div class="p-3 rounded border h-100"><div class="dashboard-muted">Trained models</div><div class="metric">{{ trained_model_count|default:0 }} / 2</div><small class="text-muted">Random Forest & XGBoost</small></div></div>
+        <div class="col-6 col-lg-3"><div class="p-3 rounded border h-100"><div class="dashboard-muted">Best model F1-score</div><div class="metric">{% if best_model_f1 != None %}{{ best_model_f1|floatformat:3 }}{% else %}—{% endif %}</div><small class="text-muted">Held-out test score (0–1)</small></div></div>
+        <div class="col-6 col-lg-3"><div class="p-3 rounded border h-100"><div class="dashboard-muted">Predictions today</div><div class="metric">{{ ai_recent_prediction_count|default:0 }}</div><small class="text-muted">Saved prediction records</small></div></div>
+        <div class="col-6 col-lg-3"><div class="p-3 rounded border h-100"><div class="dashboard-muted">Simulated sensor readings</div><div class="metric">{{ simulated_sensor_readings|default:0 }}</div><small class="text-muted">Clearly identified test observations</small></div></div>
+        <div class="col-6 col-lg-3"><div class="p-3 rounded border h-100"><div class="dashboard-muted">Historical API weather</div><div class="metric">{{ historical_api_weather_records|default:0 }}</div><small class="text-muted">Open-Meteo imported observations</small></div></div>
+        <div class="col-6 col-lg-3"><div class="p-3 rounded border h-100"><div class="dashboard-muted">Irrigation recommended</div><div class="metric">{{ ai_required_count|default:0 }}</div><small class="text-muted">Across all saved predictions</small></div></div>
+      </div>
+      {% if model_dataset_type == "synthetic" %}<div class="alert alert-warning mt-3 mb-0 py-2"><strong>Research note:</strong> These model metrics were calculated using synthetic training data. They demonstrate the pipeline but are not validated agricultural performance. Replace with labelled local farm data before relying on recommendations.</div>{% endif %}
+      </div>
+    </div></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-7 d-flex"><div class="card flex-fill"><div class="card-header"><h5 class="card-title mb-0">Random Forest vs XGBoost</h5><div class="dashboard-muted">Accuracy, precision, recall and F1-score (%)</div></div><div class="card-body"><div class="dashboard-chart"><canvas id="ai-model-performance-chart"></canvas></div><div id="ai-model-empty" class="dashboard-empty d-none">Train the models to display evaluation metrics.</div></div></div></div>
+    <div class="col-xl-5 d-flex"><div class="card flex-fill"><div class="card-header"><h5 class="card-title mb-0">Irrigation Decision Distribution</h5><div class="dashboard-muted">Distribution of saved AI decisions</div></div><div class="card-body"><div class="dashboard-chart"><canvas id="ai-decision-chart"></canvas></div><div id="ai-decision-empty" class="dashboard-empty d-none">No AI prediction records yet.</div></div></div></div>
+  </div>
+  <div class="row">
+    <div class="col-xl-7 d-flex"><div class="card flex-fill"><div class="card-header"><h5 class="card-title mb-0">Soil Moisture Trend</h5><div class="dashboard-muted">Latest actual sensor observations (not a future forecast)</div></div><div class="card-body"><div class="dashboard-chart"><canvas id="ai-moisture-chart"></canvas></div><div id="ai-moisture-empty" class="dashboard-empty d-none">No soil moisture readings are available.</div></div></div></div>
+    <div class="col-xl-5 d-flex"><div class="card flex-fill"><div class="card-header"><h5 class="card-title mb-0">Model Feature Importance</h5><div class="dashboard-muted">Relative contribution reported by each trained model</div></div><div class="card-body"><div class="dashboard-chart"><canvas id="ai-feature-chart"></canvas></div><div id="ai-feature-empty" class="dashboard-empty d-none">Train the models to calculate feature importance.</div></div></div></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-8 d-flex"><div class="card flex-fill"><div class="card-header d-flex justify-content-between align-items-center"><div><h5 class="card-title mb-0">Recent Planting Records</h5><div class="dashboard-muted">Latest recorded crop activities</div></div><a href="{% url 'planting_record_list' %}" class="btn btn-sm btn-primary">View all</a></div><div class="table-responsive"><table class="table table-hover my-0 dashboard-table"><thead><tr><th>Farm</th><th>Crop</th><th>Planting Date</th><th>Expected Harvest</th><th>Status</th></tr></thead><tbody>
+      {% for planting in recent_plantings %}<tr><td>{{ planting.farm }}</td><td>{{ planting.crop }}</td><td>{{ planting.planting_date|date:"d M Y" }}</td><td>{{ planting.expected_harvest_date|date:"d M Y" }}</td><td><span class="badge bg-{% if planting.status == 'HARVESTED' %}success{% elif planting.status == 'CANCELLED' %}danger{% elif planting.status == 'GROWING' %}info{% else %}primary{% endif %}">{{ planting.get_status_display }}</span></td></tr>{% empty %}<tr><td colspan="5" class="dashboard-empty">No planting records found.</td></tr>{% endfor %}
+    </tbody></table></div></div></div>
+    <div class="col-xl-4 d-flex"><div class="card flex-fill"><div class="card-header d-flex justify-content-between align-items-center"><div><h5 class="card-title mb-0">Recent Irrigation</h5><div class="dashboard-muted">Latest water usage activities</div></div><a href="{% url 'irrigation_record_list' %}" class="btn btn-sm btn-primary">View all</a></div><div class="table-responsive"><table class="table table-hover my-0 dashboard-table"><thead><tr><th>Farm / Crop</th><th>Water (L)</th><th>Status</th></tr></thead><tbody>
+      {% for irrigation in recent_irrigations %}<tr><td><div>{{ irrigation.farm }}</div><small class="text-muted">{% if irrigation.planting %}{{ irrigation.planting.crop }}{% else %}General irrigation{% endif %}</small></td><td>{{ irrigation.water_volume_liters|floatformat:2 }}</td><td><span class="badge bg-{% if irrigation.status == 'COMPLETED' %}success{% elif irrigation.status == 'CANCELLED' %}danger{% else %}primary{% endif %}">{{ irrigation.get_status_display }}</span></td></tr>{% empty %}<tr><td colspan="3" class="dashboard-empty">No irrigation records found.</td></tr>{% endfor %}
+    </tbody></table></div></div></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-6 d-flex"><div class="card flex-fill"><div class="card-header"><h5 class="card-title mb-0">Recent Weather Records</h5></div><div class="table-responsive"><table class="table table-hover my-0 dashboard-table"><thead><tr><th>Farm</th><th>Observed At</th><th>Rainfall (mm)</th><th>Temperature (°C)</th><th>Humidity (%)</th></tr></thead><tbody>
+      {% for weather in recent_weather %}<tr><td>{{ weather.farm }}</td><td>{{ weather.observed_at|date:"d M Y H:i" }}</td><td>{{ weather.rainfall_mm|floatformat:2 }}</td><td>{% if weather.temperature_c != None %}{{ weather.temperature_c|floatformat:1 }}{% else %}—{% endif %}</td><td>{% if weather.humidity_pct != None %}{{ weather.humidity_pct|floatformat:1 }}{% else %}—{% endif %}</td></tr>{% empty %}<tr><td colspan="5" class="dashboard-empty">No weather records found.</td></tr>{% endfor %}
+    </tbody></table></div></div></div>
+    <div class="col-xl-6 d-flex"><div class="card flex-fill"><div class="card-header"><h5 class="card-title mb-0">Recent Sensor Readings</h5></div><div class="table-responsive"><table class="table table-hover my-0 dashboard-table"><thead><tr><th>Device</th><th>Farm</th><th>Recorded At</th><th>Soil Moisture</th><th>Temperature</th><th>Humidity</th></tr></thead><tbody>
+      {% for reading in recent_sensor_readings %}<tr><td>{{ reading.device.device_code }}</td><td>{{ reading.device.farm }}</td><td>{{ reading.recorded_at|date:"d M Y H:i" }}</td><td>{% if reading.soil_moisture_pct != None %}{{ reading.soil_moisture_pct|floatformat:1 }}%{% else %}—{% endif %}</td><td>{% if reading.temperature_c != None %}{{ reading.temperature_c|floatformat:1 }} °C{% else %}—{% endif %}</td><td>{% if reading.humidity_pct != None %}{{ reading.humidity_pct|floatformat:1 }}%{% else %}—{% endif %}</td></tr>{% empty %}<tr><td colspan="6" class="dashboard-empty">No sensor readings found.</td></tr>{% endfor %}
+    </tbody></table></div></div></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof Chart === "undefined") return;
+  const monthLabels = {{ month_labels_json|default:"[]"|safe }};
+  const rainfallData = {{ rainfall_by_month_json|default:"[]"|safe }};
+  const waterData = {{ water_by_month_json|default:"[]"|safe }};
+  const lineCanvas = document.getElementById("chartjs-dashboard-line");
+  if (lineCanvas) new Chart(lineCanvas, {type:"line",data:{labels:monthLabels,datasets:[
+    {label:"Rainfall (mm)",data:rainfallData,borderColor:"#3b7ddd",backgroundColor:"rgba(59,125,221,0.12)",fill:true,tension:0.35},
+    {label:"Completed irrigation (L)",data:waterData,borderColor:"#fcb92c",backgroundColor:"rgba(252,185,44,0.08)",fill:false,tension:0.35}
+  ]},options:{maintainAspectRatio:false,responsive:true,plugins:{legend:{display:true}},scales:{y:{beginAtZero:true}}}});
+  const pieCanvas = document.getElementById("chartjs-dashboard-pie");
+  if (pieCanvas) new Chart(pieCanvas, {type:"doughnut",data:{labels:["Planned","Completed","Cancelled"],datasets:[{data:[{{ planned_irrigations|default:0 }},{{ completed_irrigations|default:0 }},{{ cancelled_irrigations|default:0 }}],backgroundColor:["#3b7ddd","#1cbb8c","#dc3545"],borderWidth:4}]},options:{maintainAspectRatio:false,responsive:true,cutout:"70%",plugins:{legend:{display:false}}}});
+
+  // AI model evaluation chart (metrics are loaded from the training output JSON).
+  const modelLabels = {{ ai_model_labels_json|default:"[]"|safe }};
+  const aiMetricSets = [
+    {label:"Accuracy", data:{{ ai_accuracy_json|default:"[]"|safe }}, backgroundColor:"#3b7ddd"},
+    {label:"Precision", data:{{ ai_precision_json|default:"[]"|safe }}, backgroundColor:"#1cbb8c"},
+    {label:"Recall", data:{{ ai_recall_json|default:"[]"|safe }}, backgroundColor:"#fcb92c"},
+    {label:"F1-score", data:{{ ai_f1_json|default:"[]"|safe }}, backgroundColor:"#6f42c1"}
+  ];
+  const modelCanvas = document.getElementById("ai-model-performance-chart");
+  const modelReady = modelLabels.length > 0 && aiMetricSets.every(x => x.data.length === modelLabels.length);
+  if (modelCanvas && modelReady) new Chart(modelCanvas, {type:"bar",data:{labels:modelLabels,datasets:aiMetricSets},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,max:100,title:{display:true,text:"Score (%)"}}}}});
+  else if (document.getElementById("ai-model-empty")) document.getElementById("ai-model-empty").classList.remove("d-none");
+
+  // Historical irrigation decisions from saved FarmPrediction records.
+  const decisionCanvas = document.getElementById("ai-decision-chart");
+  const decisionCounts = {{ ai_decision_counts_json|default:"[]"|safe }};
+  if (decisionCanvas && decisionCounts.some(x => x > 0)) new Chart(decisionCanvas,{type:"doughnut",data:{labels:["Irrigation required","Not required"],datasets:[{data:decisionCounts,backgroundColor:["#f0ad4e","#1cbb8c"],borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom"}}}});
+  else if (document.getElementById("ai-decision-empty")) document.getElementById("ai-decision-empty").classList.remove("d-none");
+
+  // Actual soil moisture readings from the latest sensor records.
+  const moistureLabels = {{ moisture_labels_json|default:"[]"|safe }};
+  const moistureValues = {{ moisture_values_json|default:"[]"|safe }};
+  const moistureCanvas = document.getElementById("ai-moisture-chart");
+  if (moistureCanvas && moistureLabels.length) new Chart(moistureCanvas,{type:"line",data:{labels:moistureLabels,datasets:[{label:"Soil moisture (%)",data:moistureValues,borderColor:"#3b7ddd",backgroundColor:"rgba(59,125,221,.12)",fill:true,tension:.3}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:0,max:100,title:{display:true,text:"Moisture (%)"}}}}});
+  else if (document.getElementById("ai-moisture-empty")) document.getElementById("ai-moisture-empty").classList.remove("d-none");
+
+  // Feature importance extracted from the fitted model artifacts.
+  const featureLabels = {{ feature_labels_json|default:"[]"|safe }};
+  const rfImportance = {{ rf_feature_importance_json|default:"[]"|safe }};
+  const xgbImportance = {{ xgb_feature_importance_json|default:"[]"|safe }};
+  const featureCanvas = document.getElementById("ai-feature-chart");
+  if (featureCanvas && featureLabels.length && (rfImportance.length || xgbImportance.length)) new Chart(featureCanvas,{type:"bar",data:{labels:featureLabels,datasets:[{label:"Random Forest",data:rfImportance},{label:"XGBoost",data:xgbImportance}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,scales:{x:{beginAtZero:true,title:{display:true,text:"Importance (%)"}}}}});
+  else if (document.getElementById("ai-feature-empty")) document.getElementById("ai-feature-empty").classList.remove("d-none");
+});
+</script>
+{% endblock %}

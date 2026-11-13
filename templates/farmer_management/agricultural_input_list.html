@@ -1,0 +1,269 @@
+
+{% extends "base.html" %}
+
+{% block title %}Agricultural Inputs{% endblock %}
+{% block page_title %}Agricultural Inputs{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <!-- Summary Cards -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="card-title text-muted mb-2">
+                                Total Inputs
+                            </h5>
+                            <h2 class="mt-1 mb-0">{{ total_inputs }}</h2>
+                        </div>
+                        <div class="col-auto">
+                            <div class="bg-primary bg-opacity-10 rounded p-3">
+                                <i data-feather="package"
+                                   class="text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="card-title text-muted mb-2">
+                                Active Inputs
+                            </h5>
+                            <h2 class="mt-1 mb-0 text-success">
+                                {{ active_inputs }}
+                            </h2>
+                        </div>
+                        <div class="col-auto">
+                            <div class="bg-success bg-opacity-10 rounded p-3">
+                                <i data-feather="check-circle"
+                                   class="text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="card-title text-muted mb-2">
+                                Inactive Inputs
+                            </h5>
+                            <h2 class="mt-1 mb-0 text-danger">
+                                {{ inactive_inputs }}
+                            </h2>
+                        </div>
+                        <div class="col-auto">
+                            <div class="bg-danger bg-opacity-10 rounded p-3">
+                                <i data-feather="pause-circle"
+                                   class="text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agricultural Inputs Table -->
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h5 class="card-title mb-0">
+                        Agricultural Input List
+                    </h5>
+                    <p class="text-muted mb-0 mt-2">
+                        Manage seeds, fertilizers, pesticides, and other farming inputs.
+                    </p>
+                </div>
+
+                <a href="{% url 'agricultural_input_create' %}"
+                   class="btn btn-primary">
+                    <i data-feather="plus" class="me-1"></i>
+                    Register Input
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Search and Filters -->
+            <form method="get" class="row g-2 mb-4">
+                <div class="col-md-4">
+                    <input type="text"
+                           name="search"
+                           class="form-control"
+                           placeholder="Search agricultural inputs..."
+                           value="{{ search }}">
+                </div>
+
+                <div class="col-md-3">
+                    <select name="input_type" class="form-select">
+                        <option value="">All Input Types</option>
+                        {% for value, label in input_types %}
+                            <option value="{{ value }}"
+                                {% if selected_type == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <select name="status" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option value="ACTIVE"
+                            {% if status == "ACTIVE" %}selected{% endif %}>
+                            Active
+                        </option>
+                        <option value="INACTIVE"
+                            {% if status == "INACTIVE" %}selected{% endif %}>
+                            Inactive
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="search" class="me-1"></i>
+                        Search
+                    </button>
+
+                    <a href="{% url 'agricultural_input_list' %}"
+                       class="btn btn-light">
+                        Reset
+                    </a>
+                </div>
+            </form>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Input Name</th>
+                            <th>Input Type</th>
+                            <th>Unit of Measure</th>
+                            <th>Status</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for item in agricultural_inputs %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+
+                                <td>
+                                    <strong>{{ item.input_name }}</strong>
+                                    {% if item.description %}
+                                        <div class="text-muted small">
+                                            {{ item.description|truncatechars:60 }}
+                                        </div>
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ item.get_input_type_display }}</td>
+
+                                <td>{{ item.unit_of_measure }}</td>
+
+                                <td>
+                                    {% if item.status == "ACTIVE" %}
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-danger">
+                                            Inactive
+                                        </span>
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-end">
+                                    <a href="{% url 'agricultural_input_detail' item.pk %}"
+                                       class="btn btn-sm btn-outline-info"
+                                       title="View">
+                                        <i data-feather="eye"></i>
+                                    </a>
+
+                                    <a href="{% url 'agricultural_input_update' item.pk %}"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Edit">
+                                        <i data-feather="edit-2"></i>
+                                    </a>
+
+                                    <form method="post"
+                                          action="{% url 'agricultural_input_delete' item.pk %}"
+                                          class="d-inline delete-input-form">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                                title="Delete">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <i data-feather="package"
+                                       class="text-muted mb-2"></i>
+                                    <p class="text-muted mb-2">
+                                        No agricultural inputs found.
+                                    </p>
+                                    <a href="{% url 'agricultural_input_create' %}"
+                                       class="btn btn-sm btn-primary">
+                                        Register First Input
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-muted small mt-3">
+                Showing {{ agricultural_inputs|length }} input(s)
+                matching your search and filters.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-input-form").forEach(function (form) {
+        form.addEventListener("submit", function (event) {
+            const confirmed = confirm(
+                "Are you sure you want to delete this agricultural input?"
+            );
+
+            if (!confirmed) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    if (window.feather) {
+        window.feather.replace();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,116 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title|default:"Register Crop" }}{% endblock %}
+{% block page_title %}{{ page_title|default:"Register Crop" }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                {% if crop %}
+                    Update Crop
+                {% else %}
+                    Crop Registration
+                {% endif %}
+            </h5>
+
+            <p class="text-muted mb-0 mt-2">
+                Register a crop and provide its category and description.
+            </p>
+        </div>
+
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.crop_name.id_for_label }}"
+                               class="form-label">
+                            Crop Name *
+                        </label>
+
+                        {{ form.crop_name }}
+
+                        {% for error in form.crop_name.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.crop_category.id_for_label }}"
+                               class="form-label">
+                            Crop Category *
+                        </label>
+
+                        {{ form.crop_category }}
+
+                        {% for error in form.crop_category.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="{{ form.description.id_for_label }}"
+                               class="form-label">
+                            Description
+                        </label>
+
+                        {{ form.description }}
+
+                        {% for error in form.description.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.is_active.id_for_label }}"
+                               class="form-label">
+                            Status *
+                        </label>
+
+                        {{ form.is_active }}
+
+                        {% for error in form.is_active.errors %}
+                            <div class="text-danger small">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'crop_list' %}"
+                       class="btn btn-light">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        {% if crop %}
+                            Update Crop
+                        {% else %}
+                            Register Crop
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

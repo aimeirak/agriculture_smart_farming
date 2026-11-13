@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Sensor Readings{% endblock %}
+{% block page_title %}Sensor Reading Management{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <!-- Summary -->
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-2">Total Readings</h6>
+                            <h3 class="mb-0">{{ total_readings }}</h3>
+                        </div>
+                        <i data-feather="activity"
+                           class="text-primary"
+                           style="width: 32px; height: 32px;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Readings Table -->
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h5 class="card-title mb-0">Sensor Readings</h5>
+                    <p class="text-muted small mb-0">
+                        Monitor soil moisture, temperature, and humidity measurements.
+                    </p>
+                </div>
+
+                <a href="{% url 'sensor_reading_create' %}"
+                   class="btn btn-primary">
+                    <i data-feather="plus" class="me-1"></i>
+                    Record Reading
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Search and Filter -->
+            <form method="get" class="row g-3 mb-4">
+
+                <div class="col-md-6">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text"
+                           id="search"
+                           name="search"
+                           class="form-control"
+                           placeholder="Search device code or farm..."
+                           value="{{ search }}">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="device" class="form-label">Sensor Device</label>
+                    <select name="device" id="device" class="form-select">
+                        <option value="">All Devices</option>
+                        {% for device in devices %}
+                            <option value="{{ device.pk }}"
+                                {% if selected_device == device.pk|stringformat:"s" %}selected{% endif %}>
+                                {{ device.device_code }} - {{ device.farm }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="search" class="me-1"></i>
+                        Filter
+                    </button>
+                    <a href="{% url 'sensor_reading_list' %}"
+                       class="btn btn-light">
+                        Clear
+                    </a>
+                </div>
+
+            </form>
+
+            <!-- Table -->
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Sensor Device</th>
+                            <th>Recorded At</th>
+                            <th>Soil Moisture</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for reading in sensor_readings %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+
+                                <td>
+                                    <strong>{{ reading.device.device_code }}</strong>
+                                    <small class="d-block text-muted">
+                                        {{ reading.device.farm }}
+                                    </small>
+                                </td>
+
+                                <td>
+                                    {{ reading.recorded_at|date:"d M Y, H:i" }}
+                                </td>
+
+                                <td>
+                                    {% if reading.soil_moisture_pct is not None %}
+                                        {{ reading.soil_moisture_pct|floatformat:2 }}%
+                                    {% else %}
+                                        <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if reading.temperature_c is not None %}
+                                        {{ reading.temperature_c|floatformat:2 }} °C
+                                    {% else %}
+                                        <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if reading.humidity_pct is not None %}
+                                        {{ reading.humidity_pct|floatformat:2 }}%
+                                    {% else %}
+                                        <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+
+                                <td class="text-end text-nowrap">
+                                    <a href="{% url 'sensor_reading_detail' reading.pk %}"
+                                       class="btn btn-sm btn-light"
+                                       title="View reading">
+                                        <i data-feather="eye"></i>
+                                    </a>
+
+                                    <a href="{% url 'sensor_reading_update' reading.pk %}"
+                                       class="btn btn-sm btn-light"
+                                       title="Edit reading">
+                                        <i data-feather="edit-2"></i>
+                                    </a>
+
+                                    <form method="post"
+                                          action="{% url 'sensor_reading_delete' reading.pk %}"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to delete this sensor reading?');">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="btn btn-sm btn-light text-danger"
+                                                title="Delete reading">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <i data-feather="activity"
+                                       class="text-muted mb-3"
+                                       style="width: 40px; height: 40px;"></i>
+                                    <h5>No Sensor Readings Found</h5>
+                                    <p class="text-muted">
+                                        No readings match your search or selected device.
+                                    </p>
+                                    <a href="{% url 'sensor_reading_create' %}"
+                                       class="btn btn-primary btn-sm">
+                                        Record First Reading
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-muted small">
+                Showing {{ total_readings }} reading(s).
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+```

@@ -1,0 +1,54 @@
+{
+  "dataset": "simulated_sensor_dataset",
+  "rows": 10000,
+  "seed": 42,
+  "label_definition": "Simulated heuristic labels; not agronomist-validated ground truth",
+  "models": {
+    "random_forest": {
+      "accuracy": 0.9755,
+      "precision": 0.9265,
+      "recall": 0.9692,
+      "f1": 0.9474,
+      "roc_auc": 0.9962,
+      "confusion_matrix": [
+        [
+          1510,
+          35
+        ],
+        [
+          14,
+          441
+        ]
+      ],
+      "feature_importance": {
+        "soil_moisture_pct": 0.881894,
+        "temperature_c": 0.029407,
+        "humidity_pct": 0.027077,
+        "rainfall_24h_mm": 0.061622
+      }
+    },
+    "xgboost": {
+      "accuracy": 0.971,
+      "precision": 0.9421,
+      "recall": 0.9297,
+      "f1": 0.9358,
+      "roc_auc": 0.9961,
+      "confusion_matrix": [
+        [
+          1519,
+          26
+        ],
+        [
+          32,
+          423
+        ]
+      ],
+      "feature_importance": {
+        "soil_moisture_pct": 0.792681,
+        "temperature_c": 0.042416,
+        "humidity_pct": 0.03865,
+        "rainfall_24h_mm": 0.126252
+      }
+    }
+  }
+}

@@ -1,0 +1,207 @@
+
+{% extends "base.html" %}
+
+{% block title %}Planting Input Details{% endblock %}
+{% block page_title %}Planting Input Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="h3 mb-1">Planting Input Details</h1>
+            <p class="text-muted mb-0">
+                View details of an agricultural input application.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a href="{% url 'planting_input_list' %}"
+               class="btn btn-light">
+                <i data-feather="arrow-left"></i>
+                Back
+            </a>
+
+            <a href="{% url 'planting_input_update' planting_input.pk %}"
+               class="btn btn-primary">
+                <i data-feather="edit-2"></i>
+                Edit
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Application Information</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">
+                                Agricultural Input
+                            </label>
+                            <h5 class="mb-1">
+                                {{ planting_input.agricultural_input.input_name }}
+                            </h5>
+                            <span class="badge bg-info">
+                                {{ planting_input.agricultural_input.get_input_type_display }}
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">
+                                Application Date
+                            </label>
+                            <h5 class="mb-0">
+                                {{ planting_input.application_date|date:"d M Y" }}
+                            </h5>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Quantity Used</label>
+                            <h4 class="mb-0">
+                                {{ planting_input.quantity_used|floatformat:3 }}
+                                <small class="text-muted fs-6">
+                                    {{ planting_input.agricultural_input.unit_of_measure }}
+                                </small>
+                            </h4>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label class="text-muted small">Input Unit</label>
+                            <h6 class="mb-0">
+                                {{ planting_input.agricultural_input.unit_of_measure|default:"Not specified" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="text-muted small">
+                                Additional Notes
+                            </label>
+
+                            {% if planting_input.notes %}
+                                <p class="mb-0" style="white-space: pre-line;">{{ planting_input.notes }}</p>
+                            {% else %}
+                                <p class="text-muted mb-0">
+                                    No additional notes provided.
+                                </p>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Planting Information</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Farm</label>
+                            <h6 class="mb-0">
+                                {{ planting_input.planting.farm }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Crop</label>
+                            <h6 class="mb-0">
+                                {{ planting_input.planting.crop }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">Planting Date</label>
+                            <h6 class="mb-0">
+                                {{ planting_input.planting.planting_date|date:"d M Y" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="text-muted small">
+                                Expected Harvest Date
+                            </label>
+                            <h6 class="mb-0">
+                                {{ planting_input.planting.expected_harvest_date|date:"d M Y" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-0">
+                            <label class="text-muted small">Growing Season</label>
+                            <h6 class="mb-0">
+                                {{ planting_input.planting.season|default:"Not specified" }}
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6 mb-0">
+                            <label class="text-muted small">Planting Status</label>
+                            <h6 class="mb-0">
+                                {{ planting_input.planting.get_status_display }}
+                            </h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Input Summary</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Input Name</label>
+                        <h6>{{ planting_input.agricultural_input.input_name }}</h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small">Input Category</label>
+                        <h6>
+                            {{ planting_input.agricultural_input.get_input_type_display }}
+                        </h6>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="text-muted small">Quantity Applied</label>
+                        <h4 class="mb-0">
+                            {{ planting_input.quantity_used|floatformat:3 }}
+                            <small class="text-muted fs-6">
+                                {{ planting_input.agricultural_input.unit_of_measure }}
+                            </small>
+                        </h4>
+                    </div>
+
+                    <hr>
+
+                    <a href="{% url 'planting_input_update' planting_input.pk %}"
+                       class="btn btn-primary w-100 mb-2">
+                        Edit Input Record
+                    </a>
+
+                    <a href="{% url 'planting_input_list' %}"
+                       class="btn btn-light w-100">
+                        Return to List
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

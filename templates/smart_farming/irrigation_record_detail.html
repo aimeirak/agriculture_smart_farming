@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Irrigation Record Details{% endblock %}
+
+{% block page_title %}Irrigation Record Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <h5 class="card-title mb-0">Irrigation Record Details</h5>
+                <p class="text-muted mb-0">
+                    Irrigation activity for {{ irrigation_record.farm.farm_name }}.
+                </p>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a href="{% url 'irrigation_record_list' %}"
+                   class="btn btn-light">
+                    <i data-feather="arrow-left" class="align-middle"></i>
+                    Back
+                </a>
+
+                <a href="{% url 'irrigation_record_update' irrigation_record.pk %}"
+                   class="btn btn-primary">
+                    <i data-feather="edit-2" class="align-middle"></i>
+                    Edit
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <h6 class="text-muted">Farm</h6>
+                    <h5>{{ irrigation_record.farm.farm_name }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h6 class="text-muted">Planting / Crop</h6>
+
+                    {% if irrigation_record.planting %}
+                        <h5>{{ irrigation_record.planting.crop.crop_name }}</h5>
+                        <p class="text-muted mb-0">
+                            Planting date:
+                            {{ irrigation_record.planting.planting_date|date:"d M Y" }}
+                        </p>
+                    {% else %}
+                        <h5 class="text-muted">General irrigation</h5>
+                        <p class="text-muted mb-0">
+                            No specific planting record selected.
+                        </p>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h6 class="text-muted">Started At</h6>
+                    <h5>{{ irrigation_record.started_at|date:"d M Y, H:i" }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h6 class="text-muted">Irrigation Method</h6>
+                    <h5>{{ irrigation_record.method }}</h5>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-light h-100 mb-0">
+                        <div class="card-body">
+                            <h6 class="text-muted">
+                                <i data-feather="clock" class="align-middle"></i>
+                                Duration
+                            </h6>
+
+                            <h3 class="mb-0">
+                                {{ irrigation_record.duration_minutes }}
+                                <small class="text-muted fs-6">minutes</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-light h-100 mb-0">
+                        <div class="card-body">
+                            <h6 class="text-muted">
+                                <i data-feather="droplet" class="align-middle"></i>
+                                Water Volume
+                            </h6>
+
+                            <h3 class="mb-0">
+                                {{ irrigation_record.water_volume_liters|floatformat:2 }}
+                                <small class="text-muted fs-6">liters</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <h6 class="text-muted">Status</h6>
+
+                    {% if irrigation_record.status == "COMPLETED" %}
+                        <span class="badge bg-success fs-6">
+                            {{ irrigation_record.get_status_display }}
+                        </span>
+                    {% elif irrigation_record.status == "PLANNED" %}
+                        <span class="badge bg-warning text-dark fs-6">
+                            {{ irrigation_record.get_status_display }}
+                        </span>
+                    {% else %}
+                        <span class="badge bg-secondary fs-6">
+                            {{ irrigation_record.get_status_display }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <h6 class="text-muted">Irrigation Record ID</h6>
+                    <small class="text-break">{{ irrigation_record.pk }}</small>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-end">
+                <form method="post"
+                      action="{% url 'irrigation_record_delete' irrigation_record.pk %}"
+                      onsubmit="return confirm('Are you sure you want to delete this irrigation record?');">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i data-feather="trash-2" class="align-middle"></i>
+                        Delete Irrigation Record
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+```

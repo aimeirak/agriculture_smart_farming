@@ -1,0 +1,108 @@
+
+{% extends "base.html" %}
+
+{% block title %}Agricultural Input Details{% endblock %}
+
+{% block page_title %}Agricultural Input Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="card-title mb-0">Agricultural Input Information</h5>
+                <p class="text-muted mb-0 mt-1">
+                    View the details of the registered agricultural input.
+                </p>
+            </div>
+
+            <span class="badge {% if agricultural_input.status == 'ACTIVE' %}bg-success{% else %}bg-danger{% endif %}">
+                {{ agricultural_input.get_status_display }}
+            </span>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label text-muted">Input Name</label>
+                    <p class="fw-semibold mb-0">
+                        {{ agricultural_input.input_name }}
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label text-muted">Input Type</label>
+                    <p class="fw-semibold mb-0">
+                        {{ agricultural_input.get_input_type_display }}
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label text-muted">Unit of Measure</label>
+                    <p class="fw-semibold mb-0">
+                        {{ agricultural_input.unit_of_measure }}
+                    </p>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label text-muted">Status</label>
+                    <p class="mb-0">
+                        <span class="badge {% if agricultural_input.status == 'ACTIVE' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ agricultural_input.get_status_display }}
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label class="form-label text-muted">Description</label>
+                    <div class="border rounded p-3">
+                        {% if agricultural_input.description %}
+                            {{ agricultural_input.description|linebreaksbr }}
+                        {% else %}
+                            <span class="text-muted">No description provided.</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if agricultural_input.created_on %}
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-muted">Date Created</label>
+                    <p class="mb-0">
+                        {{ agricultural_input.created_on|date:"d M Y, H:i" }}
+                    </p>
+                </div>
+                {% endif %}
+
+                {% if agricultural_input.updated_on %}
+                <div class="col-md-6 mb-3">
+                    <label class="form-label text-muted">Last Updated</label>
+                    <p class="mb-0">
+                        {{ agricultural_input.updated_on|date:"d M Y, H:i" }}
+                    </p>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-end gap-2">
+                <a href="{% url 'agricultural_input_list' %}"
+                   class="btn btn-light">
+                    <i class="align-middle" data-feather="arrow-left"></i>
+                    Back to List
+                </a>
+
+                <a href="{% url 'agricultural_input_update' agricultural_input.pk %}"
+                   class="btn btn-primary">
+                    <i class="align-middle" data-feather="edit-2"></i>
+                    Edit Input
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

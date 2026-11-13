@@ -1,0 +1,170 @@
+
+{% extends "base.html" %}
+
+{% block title %}Planting Inputs{% endblock %}
+{% block page_title %}Planting Inputs{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="h3 mb-1">Planting Inputs</h1>
+            <p class="text-muted mb-0">
+                Manage agricultural inputs applied to planting records.
+            </p>
+        </div>
+
+        <a href="{% url 'planting_input_create' %}" class="btn btn-primary">
+            <i data-feather="plus" class="align-middle"></i>
+            Record Input Usage
+        </a>
+    </div>
+
+    <!-- Summary -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="text-muted">Total Input Records</h6>
+                            <h3 class="mb-0">{{ total_records }}</h3>
+                        </div>
+                        <div class="text-primary">
+                            <i data-feather="package" style="width:32px;height:32px;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Search Planting Inputs</h5>
+        </div>
+
+        <div class="card-body">
+            <form method="get">
+                <div class="row align-items-end">
+                    <div class="col-md-9 mb-2">
+                        <label for="search" class="form-label">
+                            Search
+                        </label>
+                        <input
+                            type="text"
+                            id="search"
+                            name="search"
+                            class="form-control"
+                            placeholder="Search by farm, crop, or agricultural input"
+                            value="{{ search }}">
+                    </div>
+
+                    <div class="col-md-3 mb-2 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i data-feather="search"></i> Search
+                        </button>
+                        <a href="{% url 'planting_input_list' %}"
+                           class="btn btn-light">
+                            Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Records Table -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Recorded Agricultural Inputs</h5>
+            <p class="text-muted small mb-0">
+                A history of inputs used for each planting record.
+            </p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover my-0">
+                <thead>
+                    <tr>
+                        <th>Farm</th>
+                        <th>Crop</th>
+                        <th>Agricultural Input</th>
+                        <th>Quantity Used</th>
+                        <th>Application Date</th>
+                        <th>Notes</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in planting_inputs %}
+                    <tr>
+                        <td>{{ item.planting.farm }}</td>
+                        <td>{{ item.planting.crop }}</td>
+                        <td>
+                            <strong>{{ item.agricultural_input.input_name }}</strong>
+                            <div class="text-muted small">
+                                {{ item.agricultural_input.get_input_type_display }}
+                            </div>
+                        </td>
+                        <td>{{ item.quantity_used|floatformat:3 }}</td>
+                        <td>{{ item.application_date|date:"d M Y" }}</td>
+                        <td>
+                            {% if item.notes %}
+                                {{ item.notes|truncatechars:40 }}
+                            {% else %}
+                                <span class="text-muted">—</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end text-nowrap">
+                            <a href="{% url 'planting_input_detail' item.pk %}"
+                               class="btn btn-sm btn-light"
+                               title="View details">
+                                <i data-feather="eye"></i>
+                            </a>
+
+                            <a href="{% url 'planting_input_update' item.pk %}"
+                               class="btn btn-sm btn-primary"
+                               title="Edit">
+                                <i data-feather="edit-2"></i>
+                            </a>
+
+                            <form method="post"
+                                  action="{% url 'planting_input_delete' item.pk %}"
+                                  class="d-inline"
+                                  onsubmit="return confirm('Delete this planting input record?');">
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="btn btn-sm btn-danger"
+                                        title="Delete">
+                                    <i data-feather="trash-2"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <i data-feather="inbox"
+                               style="width:40px;height:40px;"
+                               class="text-muted mb-2"></i>
+                            <p class="text-muted mb-2">
+                                No planting input records found.
+                            </p>
+                            <a href="{% url 'planting_input_create' %}"
+                               class="btn btn-sm btn-primary">
+                                Record Your First Input
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

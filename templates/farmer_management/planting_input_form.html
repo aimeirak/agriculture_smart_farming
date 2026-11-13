@@ -1,0 +1,127 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+{% block page_title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+
+    <div class="mb-3">
+        <h1 class="h3 mb-1">{{ page_title }}</h1>
+        <p class="text-muted mb-0">
+            Record the agricultural input applied to a planting record.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Planting Input Information</h5>
+            <p class="text-muted small mb-0">
+                Fields marked with <span class="text-danger">*</span> are required.
+            </p>
+        </div>
+
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.planting.id_for_label }}"
+                               class="form-label">
+                            Planting Record
+                            <span class="text-danger">*</span>
+                        </label>
+                        {{ form.planting }}
+                        {% for error in form.planting.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">
+                            Select the farm and crop for which the input was used.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.agricultural_input.id_for_label }}"
+                               class="form-label">
+                            Agricultural Input
+                            <span class="text-danger">*</span>
+                        </label>
+                        {{ form.agricultural_input }}
+                        {% for error in form.agricultural_input.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">
+                            Select the seed, fertilizer, pesticide, or other input.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.quantity_used.id_for_label }}"
+                               class="form-label">
+                            Quantity Used
+                            <span class="text-danger">*</span>
+                        </label>
+                        {{ form.quantity_used }}
+                        {% for error in form.quantity_used.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">
+                            Enter a positive quantity using the appropriate unit.
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="{{ form.application_date.id_for_label }}"
+                               class="form-label">
+                            Application Date
+                            <span class="text-danger">*</span>
+                        </label>
+                        {{ form.application_date }}
+                        {% for error in form.application_date.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label for="{{ form.notes.id_for_label }}"
+                               class="form-label">
+                            Additional Notes
+                        </label>
+                        {{ form.notes }}
+                        {% for error in form.notes.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'planting_input_list' %}"
+                       class="btn btn-light">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i data-feather="save" class="align-middle"></i>
+                        {{ button_text|default:"Save Planting Input" }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
